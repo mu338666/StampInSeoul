@@ -46,6 +46,9 @@ public class Theme_festival_frag extends Fragment {
     // 메인 화면 출력용
     ArrayList<ThemeData> list = new ArrayList<>();
 
+    LottieAnimationView animationView1 = null;
+    LottieAnimationView animationView2 = null;
+    LottieAnimationView animationView3 = null;
     LottieAnimationView animationView4 = null;
 
     final static String TAG = "ThemeActivity";
@@ -79,9 +82,27 @@ public class Theme_festival_frag extends Fragment {
         Theme_festival_frag.AsyncTaskClassMain async = new Theme_festival_frag.AsyncTaskClassMain();
         async.execute();
 
-        animationView4 = view.findViewById(R.id.animation_view3);
+        animationView1 = view.findViewById(R.id.animation_view1);
+        animationView2 = view.findViewById(R.id.animation_view2);
+        animationView3 = view.findViewById(R.id.animation_view3);
+        animationView4 = view.findViewById(R.id.animation_view4);
 
-        animationView4.setAnimation("red_wave.json");
+        animationView1.setAnimation("red_wave.json");
+        animationView1.loop(true);
+        animationView1.playAnimation();
+        animationView1.setVisibility(View.INVISIBLE);
+
+        animationView2.setAnimation("blue_wave.json");
+        animationView2.loop(true);
+        animationView2.playAnimation();
+        animationView2.setVisibility(View.INVISIBLE);
+
+        animationView3.setAnimation("yellow_wave.json");
+        animationView3.loop(true);
+        animationView3.playAnimation();
+        animationView3.setVisibility(View.INVISIBLE);
+
+        animationView4.setAnimation("green_wave.json");
         animationView4.loop(true);
         animationView4.playAnimation();
         animationView4.setVisibility(View.INVISIBLE);

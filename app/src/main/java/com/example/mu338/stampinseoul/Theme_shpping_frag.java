@@ -73,20 +73,14 @@ public class Theme_shpping_frag extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
+        Theme_shpping_frag.AsyncTaskClassMain async = new Theme_shpping_frag.AsyncTaskClassMain();
+        async.execute();
+
+        adapter = new ThemeAdapter(R.layout.item_theme, getActivity(), list);
+
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-
-            Theme_shpping_frag.AsyncTaskClassMain async = new Theme_shpping_frag.AsyncTaskClassMain();
-            async.execute();
-
-            adapter = new ThemeAdapter(R.layout.item_theme, getActivity(), list);
-        }
-    } // end of setUserVisibleHint
 
     class AsyncTaskClassMain extends android.os.AsyncTask<Integer, Long, String> {
 

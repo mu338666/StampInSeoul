@@ -3,13 +3,17 @@ package com.example.mu338.stampinseoul;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -180,18 +184,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             TextView txt_Detail_info = viewDialog.findViewById(R.id.txt_Detail_info);
             ImageView img_Datail_info = viewDialog.findViewById(R.id.img_Datail_info);
 
+            Button btnExit = viewDialog.findViewById(R.id.btnExit);
+
             Glide.with(context).load(themeData.getFirstImage()).override(500, 300).into(img_Datail_info);
 
             txt_Detail_title.setText(themeData.getTitle());
             txt_Detail_addr.setText(themeData.getAddr());
             txt_Detail_info.setText(themeData.getOverView());
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+            final Dialog dialog = new Dialog(context);
 
-            dialog.setTitle(" 정보");
-            dialog.setView(viewDialog); // 이미지가 들어감
-            dialog.setPositiveButton("닫기", null);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            dialog.setContentView(viewDialog); // 이미지가 들어감
+
             dialog.show();
+
+            btnExit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
 
         }
 

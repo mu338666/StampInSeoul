@@ -2,9 +2,12 @@ package com.example.mu338.stampinseoul;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -188,13 +191,26 @@ public class SearchActivity extends AppCompatActivity {
                                 recyclerView.setAdapter(adapter);
 
                             } catch (ClassCastException e1) {
-
                                 e1.printStackTrace();
-                                final AlertDialog.Builder noSearchDlg = new AlertDialog.Builder(SearchActivity.this);
-                                noSearchDlg.setTitle("찾을 수 없음");
-                                noSearchDlg.setMessage("입력하신 문자를 찾을 수 없습니다.\n 다시 입력해 주세욧.");
-                                noSearchDlg.setPositiveButton("확인", null);
+
+                                View viewDialog = View.inflate(getApplicationContext(), R.layout.dialog_search_message, null);
+
+                                Button btnExit = viewDialog.findViewById(R.id.btnExit);
+
+                                final Dialog noSearchDlg = new Dialog(SearchActivity.this);
+
+                                noSearchDlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                                noSearchDlg.setContentView(viewDialog);
                                 noSearchDlg.show();
+
+                                btnExit.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        noSearchDlg.dismiss();
+                                    }
+                                });
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

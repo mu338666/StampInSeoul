@@ -21,10 +21,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,10 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
     private ArrayList<ThemeFavoritesData> list = new ArrayList<>();
     private RecyclerView recyclerView;
+
+    private ListView listView;
+    private ArrayList<String> arrayData = new ArrayList<String>();
+
     private LinearLayoutManager linearLayoutManager;
     private Theme_favorites_adapter theme_favorites_adapter;
 
@@ -112,7 +119,7 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
         Log.d("dd", strId.toString());
 
-        Toast.makeText(getApplicationContext(), strId+" 님, 환영합니다!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), strNickname+" 님, 환영합니다!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -123,10 +130,10 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        /*if( !isDragged ){
+        if( !isDragged ){
             viewPager.setCurrentItem(tab.getPosition());
         }
-        isDragged = false;*/
+        isDragged = false;
     }
 
     @Override
@@ -197,26 +204,53 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
                 final View viewDialog = v.inflate(v.getContext(), R.layout.dialog_favorites, null);
 
-                recyclerView = viewDialog.findViewById(R.id.recyclerView);
+                listView = viewDialog.findViewById(R.id.listView);
 
-                linearLayoutManager = new LinearLayoutManager(viewDialog.getContext());
 
-                recyclerView.setLayoutManager(linearLayoutManager);
 
-                theme_favorites_adapter = new Theme_favorites_adapter(R.layout.dialog_favorites_item, list);
+                String[] mid = {"경복궁", "덕수궁", "창덕궁" };
 
-                recyclerView.setAdapter(theme_favorites_adapter);
+                for ( String data : mid){
+                    arrayData.add(data);
+                }
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_check_box_color, arrayData);
+
+                listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+                listView.setAdapter(adapter);
 
                 Button btnSave = viewDialog.findViewById(R.id.btnSave);
                 Button btnExit = viewDialog.findViewById(R.id.btnExit);
 
                 final Dialog dialog = new Dialog(viewDialog.getContext());
 
+                // Check
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                });
+
+                // Delete
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                        return false;
+                    }
+                });
+
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 dialog.setContentView(viewDialog); // 이미지가 들어감
                 dialog.show();
 
+                // Insert
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

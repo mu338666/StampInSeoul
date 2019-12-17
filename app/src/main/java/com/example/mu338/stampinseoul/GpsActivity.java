@@ -1,6 +1,7 @@
 package com.example.mu338.stampinseoul;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -70,7 +71,9 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
     GroundOverlayOptions cctvMark;
     ArrayList<MarkerOptions> cctvList = new ArrayList<MarkerOptions>();
     boolean chcked = false;
-    private float min = 200.0f;
+    private float min = 300.0f;
+
+    private boolean gpsTest = false;
 
     // == 리사이클러뷰
     private ArrayList<GpsData> list = new ArrayList<>();
@@ -241,7 +244,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     win = true;
 
-                    locManager.addProximityAlert(37.562409, 127.035103, min, -1, proximityIntent);
+                    locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
 
                     Toast.makeText(getActivity(), "GPS기능을 시작합니다.", Toast.LENGTH_SHORT).show();
 
@@ -252,6 +255,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                     }
 
                     locationText.setText("GPS기능을 시작합니다.");
+
+                    gpsTest = true;
 
                 } catch (SecurityException e) {
 
@@ -265,7 +270,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
             case R.id.alert_release:
 
-                min=200.0f;
+                min=300.0f;
 
                 if(animationView.isAnimating()){
                     animationView.cancelAnimation();
@@ -293,9 +298,12 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     locationText.setText("등록버튼을 눌러주세요.");
 
+                    gpsTest = false;
+
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 }
+
                 break;
 
             case R.id.fab :
@@ -345,14 +353,34 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
             lng = location.getLatitude();
 
+            Log.d("dd", String.valueOf(lat)+" "+ lng);
+
             if (win) {
 
                 try {
-                    locManager.addProximityAlert(37.562409, 127.035103, min, -1, proximityIntent);
+                    locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 }
             }
+
+            if(gpsTest){
+
+                if(animationView.isAnimating() == true){
+                    animationView.cancelAnimation();
+                }
+
+                Toast.makeText(getContext(), "목표반경 300미터 밖에 있습니다.", Toast.LENGTH_LONG).show();
+
+                animationView.setAnimation("black_wave.json");
+                animationView.loop(true);
+                animationView.playAnimation();
+
+                locationText.setText("목표반경 300미터 밖에 있어요.");
+
+            }
+
+
 
 //            chcked = true;
 //            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(MainActivity.this);
@@ -419,17 +447,16 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
     public class AlertReceiver extends BroadcastReceiver {
 
+        @SuppressLint("MissingPermission")
         @Override
-
         public void onReceive(Context context, Intent intent) {
 
             boolean isEntering = intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false);
 
-            boolean test = false;
-
             animationView = view.findViewById(R.id.animation_view);
 
             Log.d(TAG, "AlertReceiver" + isEntering);
+
 
             if (isEntering) {
 
@@ -437,13 +464,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                 switch (mm) {
 
-                    case 20:
+                    case 10 :
 
                         if(animationView.isAnimating() == true){
                             animationView.cancelAnimation();
                         }
 
-                        Toast.makeText(context, "목표에 도착했습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "목표지점에 도착 했습니다.", Toast.LENGTH_LONG).show();
 
                         // dl.setBackgroundColor(Color.YELLOW);
 
@@ -451,9 +478,31 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                         animationView.loop(true);
                         animationView.playAnimation();
 
-                        locationText.setText("목표 지점에 도착했어요.");
+                        locationText.setText("목표지점에 도착했어요.");
+
+                        break;
+
+
+                    case 20:
+
+                        if(animationView.isAnimating() == true){
+                            animationView.cancelAnimation();
+                        }
+
+                        Toast.makeText(context, "목표반경 50미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
+
+
+                        // dl.setBackgroundColor(Color.YELLOW);
+
+                        animationView.setAnimation("green_wave.json");
+                        animationView.loop(true);
+                        animationView.playAnimation();
+
+                        locationText.setText("목표반경 50미터 안에 들어왔어요.");
 
                         //Log.d(TAG,"4번");
+
+                        min = 10.0f;
 
                         break;
 
@@ -463,19 +512,20 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                             animationView.cancelAnimation();
                         }
 
-                        Toast.makeText(context, "목표반경 50미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "목표반경 100미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
                         // dl.setBackgroundColor(Color.BLUE);
+
 
                         animationView.setAnimation("yellow_wave.json");
                         animationView.loop(true);
                         animationView.playAnimation();
 
-                        locationText.setText("목표반경 50미터 내에 들어왔어요.");
+                        locationText.setText("목표반경 100미터 내에 들어왔어요.");
+
+                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
 
                         min = 20.0f;
                         //Log.d(TAG,"3번");
-
-
 
                         break;
 
@@ -487,14 +537,16 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                         }
 
-                        Toast.makeText(context, "목표반경 100미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "목표반경 200미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
                         // dl.setBackgroundColor(Color.RED);
 
                         animationView.setAnimation("blue_wave.json");
                         animationView.loop(true);
                         animationView.playAnimation();
 
-                        locationText.setText("목표반경 100미터 내에 들어왔어요.");
+                        locationText.setText("목표반경 200미터 내에 들어왔어요.");
+
+                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
 
                         min = 50.0f;
                         //Log.d(TAG,"2번");
@@ -509,20 +561,43 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                             animationView.cancelAnimation();
                         }
 
-                        Toast.makeText(context, "목표반경 200미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "목표반경 300미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
                         //dl.setBackgroundColor(Color.GREEN);
 
                         animationView.setAnimation("red_wave.json");
                         animationView.loop(true);
                         animationView.playAnimation();
 
-                        locationText.setText("목표반경 200미터 내에 들어왔어요.");
+                        locationText.setText("목표반경 300미터 내에 들어왔어요.");
+
+                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
 
                         //Log.d(TAG,"1번");
                         min = 100.0f;
 
+                        break;
+
+                    case 300 :
+
+                        if(animationView.isAnimating() == true){
+                            animationView.cancelAnimation();
+                        }
+                        animationView.setAnimation("red_wave.json");
+                        animationView.loop(true);
+                        animationView.playAnimation();
+
+                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+
+                        locationText.setText("목표 반경 300미터 근방에 접근했어요.");
+
+                        gpsTest = false;
+
+                        //Log.d(TAG,"1번");
+                        min = 200.0f;
 
                         break;
+
+
 
                 }
 
@@ -538,13 +613,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                             animationView.cancelAnimation();
                         }
 
-                        Toast.makeText(context, "목표반경 20미터 멀어졌습니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "목표반경 50미터 멀어졌습니다.", Toast.LENGTH_LONG).show();
 
                         animationView.setAnimation("yellow_wave.json");
                         animationView.loop(true);
                         animationView.playAnimation();
 
-                        locationText.setText("목표반경 20미터 내에서 벗어났어요.");
+                        locationText.setText("목표반경 50미터 내에서 벗어났어요.");
 
                         min = 50.0f;
 
@@ -600,6 +675,9 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                         animationView.playAnimation();
 
                         locationText.setText("목표반경 200미터 내에서 벗어났어요.");
+
+                        gpsTest = true;
+
                         break;
 
                 }

@@ -85,28 +85,14 @@ public class Theme_culture_frag extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        animationView2 = view.findViewById(R.id.animation_view2);
+        Theme_culture_frag.AsyncTaskClassMain async = new Theme_culture_frag.AsyncTaskClassMain();
+        async.execute();
 
-        animationView2.setAnimation("red_wave.json");
-        animationView2.loop(true);
-        animationView2.playAnimation();
-        animationView2.setVisibility(View.INVISIBLE);
+        adapter = new ThemeAdapter(R.layout.item_theme, getActivity(), list);
+
 
         return view;
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            Theme_culture_frag.AsyncTaskClassMain async = new Theme_culture_frag.AsyncTaskClassMain();
-            async.execute();
-
-            adapter = new ThemeAdapter(R.layout.item_theme, getActivity(), list);
-
-        }
-
-    } // end of setUserVisibleHint
 
     class AsyncTaskClassMain extends android.os.AsyncTask<Integer, Long, String> {
 

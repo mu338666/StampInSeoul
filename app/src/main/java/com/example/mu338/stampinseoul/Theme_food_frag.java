@@ -76,27 +76,13 @@ public class Theme_food_frag extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        animationView3 = view.findViewById(R.id.animation_view3);
+        Theme_food_frag.AsyncTaskClassMain async = new Theme_food_frag.AsyncTaskClassMain();
+        async.execute();
 
-        animationView3.setAnimation("red_wave.json");
-        animationView3.loop(true);
-        animationView3.playAnimation();
-        animationView3.setVisibility(View.INVISIBLE);
+        adapter = new ThemeAdapter(R.layout.item_theme, getActivity(), list);
 
         return view;
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser) {
-            Theme_food_frag.AsyncTaskClassMain async = new Theme_food_frag.AsyncTaskClassMain();
-            async.execute();
-
-            adapter = new ThemeAdapter(R.layout.item_theme, getActivity(), list);
-        }
-    } // end of setUserVisibleHint
 
     class AsyncTaskClassMain extends android.os.AsyncTask<Integer, Long, String> {
 

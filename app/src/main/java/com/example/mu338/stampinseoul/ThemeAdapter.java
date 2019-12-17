@@ -165,31 +165,29 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
             }
         });*/
 
+        holder.Like_heart.setSelected(false);
         holder.Like_heart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-                if (holder.Like_heart.isSelected()) {
-
+                if (list.get(position).isHart()) {
                     holder.Like_heart.setSelected(false);
-
+                    list.get(position).setHart(false);
                 } else {
-
                     holder.Like_heart.setSelected(true);
-
+                    list.get(position).setHart(true);
                     holder.Like_heart.likeAnimation(new AnimatorListenerAdapter() {
-
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
                         }
-
                     });
                 }
-
             }
         });
+        if(list.get(position).isHart()){
+            holder.Like_heart.setSelected(true);
+        }
 
     }
 
