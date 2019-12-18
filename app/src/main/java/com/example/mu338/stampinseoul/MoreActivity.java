@@ -59,6 +59,7 @@ public class MoreActivity extends Fragment {
     private ArrayList<String> chileListContent2 = new ArrayList<>();
     private ArrayList<String> chileListContent3 = new ArrayList<>();
     private ArrayList<String> chileListContent4 = new ArrayList<>();
+    private ArrayList<String> chileListContent5 = new ArrayList<>();
 
 
     @Nullable
@@ -69,20 +70,25 @@ public class MoreActivity extends Fragment {
 
         eListView = view.findViewById(R.id.eListView);
 
+        groupList.removeAll(groupList);
+
         groupList.add("내 정보");
         groupList.add("고객 센터");
         groupList.add("이용 약관");
         groupList.add("App 정보");
+        groupList.add("개발자 정보");
 
         chileListContent1.add("내 정보 테스트 입니다.");
         chileListContent2.add("고객 센터 테스트 입니다.");
         chileListContent3.add("이용 약관 테스트 입니다.");
         chileListContent4.add("App 정보 테스트 입니다.");
+        chileListContent5.add("이무권"+"\n"+"박은혜"+"\n"+"서종주");
 
         childList.add(chileListContent1);
         childList.add(chileListContent2);
         childList.add(chileListContent3);
         childList.add(chileListContent4);
+        childList.add(chileListContent5);
 
         eListView.setAdapter(new MoreAdapter(view.getContext(), groupList, childList));
 
@@ -108,6 +114,7 @@ public class MoreActivity extends Fragment {
 
 
         btnLogout = view.findViewById(R.id.btnLogout);
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.sqlite.SQLiteConstraintException;
 import android.support.v7.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginButton btn_kakao_login;
 
     private SessionCallback sessionCallback;
+
+    public static Long userId=null;
 
     @Override
 
@@ -140,19 +143,64 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onSuccess(MeV2Response result) {
 
+                    try {
+
+                        MainActivity.dbHelper = new DBHelper(getApplicationContext());
+
+                        userId = result.getId();
+
+                        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+
+
+                        String insertUserInfo = "INSERT or REPLACE INTO userTBL values('"
+                                + result.getId() + "' , '"
+                                + result.getNickname() + "' , '"
+                                + result.getProfileImagePath() + "');";
+
+                        //+ " SELECT * FROM userTBL WHERE NOT EXISTS (SELECT userId FROM userTBL WHERE userID='" + result.getId() + "') LIMIT 1;";
+
+                        MainActivity.db.execSQL(insertUserInfo);
+
+
+
+                        // 새로 로그인한 유저의 전용 테이블 2개 생성
+                        String createZzimTBL = "CREATE TABLE IF NOT EXISTS ZZIM_" + result.getId() + "("
+                                + "title TEXT PRIMARY KEY, "
+                                + "addr TEXT, "
+                                + "mapX REAL, "
+                                + "mapY REAL); ";
+
+                        MainActivity.db.execSQL(createZzimTBL);
+
+
+                        String createStampTBL = "CREATE TABLE IF NOT EXISTS STAMP_" + result.getId() + "("
+                                + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                + "title TEXT, "
+                                + "addr TEXT, "
+                                + "mapX REAL, "
+                                + "mapY REAL, "
+                                + "picture TEXT, "
+                                + "content_pola TEXT, "
+                                + "content_title TEXT, "
+                                + "contents TEXT, "
+                                + "complete INTEGER);";
+
+                        MainActivity.db.execSQL(createStampTBL);
+
+                    } catch (SQLiteConstraintException e) {
+
+                    }
+
+                    Log.d("TAG", userId.toString());
+
                     Intent intent = new Intent(getApplicationContext(), ThemeActivity.class);
 
                     intent.putExtra("name", result.getNickname()); // 유저 닉네임
                     intent.putExtra("profile", result.getProfileImagePath()); // 카카오톡 프로필 이미지
                     intent.putExtra("id", result.getId());
 
-
-                    Log.d("dd", String.valueOf(result.getId()));
-
                     startActivity(intent);
-
                     finish();
-
                 }
             });
         }

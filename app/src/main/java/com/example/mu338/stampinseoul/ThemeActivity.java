@@ -2,8 +2,12 @@ package com.example.mu338.stampinseoul;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.constraint.ConstraintLayout;
@@ -17,7 +21,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,9 +40,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-    // 로그인 후 보이는 첫 화면. 각 테마들 관리 액티비티.
+import de.hdodenhof.circleimageview.CircleImageView;
+
+// 로그인 후 보이는 첫 화면. 각 테마들 관리 액티비티.
 
 public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, ViewPager.OnPageChangeListener, View.OnClickListener {
 
@@ -48,7 +60,13 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
     private long backButtonTime = 0;
 
     private ListView listView;
-    private ArrayList<String> arrayData = new ArrayList<String>();
+
+    // 찜 데이터베이스와 연동되는 리스트
+    private ArrayList<ThemeData> list = new ArrayList<>();
+    // 찜 목록에서 선택한 것만 담는 리스트
+    private ArrayList<ThemeData> checkedList = new ArrayList<>();
+    // 찜 목록에 뿌려주기 위해 만든 리스트
+    private ArrayList<String> titleList = new ArrayList<>();
 
     private FloatingActionButton fab, fab1, fab2;
     private Animation fab_open, fab_close;
@@ -60,6 +78,8 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
     String strNickname, strProfile;
     Long strId;
     Long ID;
+
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,9 +133,64 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
         strProfile = intent.getStringExtra("profile");
         Long strId = intent.getLongExtra("id", 0L);
 
-        Log.d("dd", strId.toString());
+        // Toast.makeText(getApplicationContext(), strNickname+" 님, 환영합니다!", Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(getApplicationContext(), strNickname+" 님, 환영합니다!", Toast.LENGTH_SHORT).show();
+        Context context = getApplicationContext();
+        CharSequence txt = "메시지입니다.";
+        int time = Toast.LENGTH_SHORT; // or Toast.LENGTH_LONG
+        Toast toast = Toast.makeText(context, txt, time);
+        LayoutInflater inflater = getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.custom_toastview, (ViewGroup)findViewById(R.id.containers));
+
+        TextView txtView = view.findViewById(R.id.txtName);
+        CircleImageView circleImageView = view.findViewById(R.id.txtProfileImage);
+
+        txtView.setText(strNickname);
+
+        Thread thread = new Thread(){
+
+            @Override
+            public void run(){
+
+                try{
+
+                    URL url = new URL(strProfile);
+
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    conn.setDoInput(true);
+
+                    conn.connect();
+
+                    InputStream is = conn.getInputStream();
+
+                    bitmap = BitmapFactory.decodeStream(is);
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        };
+
+        thread.start();
+
+        try {
+
+            thread.join();
+
+            circleImageView.setImageBitmap(bitmap);
+
+        }catch (InterruptedException e){
+
+        }
+
+        toast.setView(view);
+        toast.show();
+
     }
 
     @Override
@@ -196,72 +271,157 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
             case R.id.fab2 :
 
+                list.removeAll(list);
+
+                checkedList.removeAll(checkedList);
+
+                titleList.removeAll(titleList);
+
                 anim();
 
                 final View viewDialog = v.inflate(v.getContext(), R.layout.dialog_favorites, null);
 
                 listView = viewDialog.findViewById(R.id.listView);
 
+                // 여기서 DB ZZIM 테이블에 들어있는거 리스트에 넣어서 뿌려주기
+                MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
 
+                final Cursor cursor;
 
-                String[] mid = {"경복궁", "덕수궁", "창덕궁" };
+                cursor = MainActivity.db.rawQuery("SELECT * FROM ZZIM_" + LoginActivity.userId + ";", null);
 
-                for ( String data : mid){
-                    arrayData.add(data);
+                if (cursor != null) {
+                    while (cursor.moveToNext()) {
+                        list.add(new ThemeData(cursor.getString(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(3)));
+                        titleList.add(cursor.getString(0));
+                    }
                 }
 
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_check_box_color, arrayData);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_check_box_color, titleList);
 
                 listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
                 listView.setAdapter(adapter);
 
+                adapter.notifyDataSetChanged();
+
                 Button btnSave = viewDialog.findViewById(R.id.btnSave);
                 Button btnExit = viewDialog.findViewById(R.id.btnExit);
+
 
                 final Dialog dialog = new Dialog(viewDialog.getContext());
 
                 // Check
+
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                     @Override
+
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                        SparseBooleanArray booleans = listView.getCheckedItemPositions();
+
+                        // 스탬프 리스트에 이미 있는 항목을 선택한 경우 checkedlist에 들어가지 못함
+                        if (booleans.get(position)) {
+
+                            checkedList.add(list.get(position));
+
+                            Log.d("TAG", " 처음 체크했을때 체크리스트 : " + checkedList);
+
+                            MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+
+                            Cursor cursor;
+
+                            cursor = MainActivity.db.rawQuery("SELECT title FROM STAMP_" + LoginActivity.userId + ";", null);
+
+
+
+                            if (checkedList != null) {
+                                while (cursor.moveToNext()) {
+                                    if (cursor.getString(0).equals(list.get(position).getTitle())) {
+                                        Toast.makeText(getApplicationContext(), list.get(position).getTitle() + " 이미 스탬프 리스트에 들어 있습니다.", Toast.LENGTH_LONG).show();
+                                        checkedList.remove(list.get(position));
+                                    }
+                                }
+
+                                cursor.moveToFirst();
+                            }
+                        } else {
+                            checkedList.remove(list.get(position));
+                        }
+                        cursor.close();
                     }
+
                 });
 
                 // Delete
-                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                        String zzimDelete = "DELETE FROM ZZIM_" + LoginActivity.userId + " WHERE title='" + list.get(position).getTitle() + "';";
+                        MainActivity.db.execSQL(zzimDelete);
 
+                        //listView.setAdapter(adapter);
+                        adapter.remove(titleList.get(position));
+                        adapter.notifyDataSetChanged();
 
-                        return false;
+                        list.remove(list.get(position));
+
+                        return true;
                     }
                 });
 
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                dialog.setContentView(viewDialog); // 이미지가 들어감
+                dialog.setContentView(viewDialog);
                 dialog.show();
 
                 // Insert
                 btnSave.setOnClickListener(new View.OnClickListener() {
+
                     @Override
+
                     public void onClick(View v) {
 
+                        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+                        Cursor cursor;
+                        cursor = MainActivity.db.rawQuery("SELECT * FROM STAMP_" + LoginActivity.userId + ";", null);
+                        cursor.moveToFirst();
+
+                        if (checkedList.size()+cursor.getCount() > 8) {
+                            Toast.makeText(getApplicationContext(), "스탬프 리스트에 8개 이상 담을 수 없습니닷!!!\n현재 스탬프 리스트에는 "
+                                    + cursor.getCount()+"개 들어있습니다.", Toast.LENGTH_LONG).show();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "스탬프 리스트에 잘 담았습니다.", Toast.LENGTH_LONG).show();
+
+                            for (ThemeData themeData : checkedList) {
+
+                                String stampInsert = "INSERT INTO STAMP_" + LoginActivity.userId + "(title, addr, mapX, mapY)" + " VALUES('" + themeData.getTitle() + "', '"
+                                        + themeData.getAddr() + "', '"
+                                        + themeData.getMapX() + "', '"
+                                        + themeData.getMapY() + "');";
+
+                                MainActivity.db.execSQL(stampInsert);
+                            }
+                        }
+
+                        cursor.close();
                     }
                 });
 
                 btnExit.setOnClickListener(new View.OnClickListener() {
+
                     @Override
+
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
+
                 });
 
-                break;
+                cursor.close();
 
             case R.id.btnSearch :
 
@@ -280,9 +440,7 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
                 }
 
             default:
-
                 break;
-
         }
     }
 

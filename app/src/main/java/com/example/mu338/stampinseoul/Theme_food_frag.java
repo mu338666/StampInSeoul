@@ -1,6 +1,7 @@
 package com.example.mu338.stampinseoul;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -133,6 +134,13 @@ public class Theme_food_frag extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
+
+                        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+
+                        Cursor cursor;
+
+                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);
+
                         try {
                             JSONObject parse_response = (JSONObject) response.get("response");
                             JSONObject parse_body = (JSONObject) parse_response.get("body");
@@ -145,7 +153,18 @@ public class Theme_food_frag extends Fragment {
                                 ThemeData themeData = new ThemeData();
                                 themeData.setFirstImage(imsi.getString("firstimage"));
                                 themeData.setTitle(imsi.getString("title"));
+                                themeData.setAddr(imsi.getString("addr1"));
+                                themeData.setMapX(imsi.getDouble("mapx"));
+                                themeData.setMapY(imsi.getDouble("mapy"));
                                 themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
+
+                                while(cursor.moveToNext()){
+                                    if(cursor.getString(0).equals(themeData.getTitle())){
+                                        themeData.setHart(true);
+                                    }
+                                }
+
+                                cursor.moveToFirst();
 
                                 list.add(themeData);
 

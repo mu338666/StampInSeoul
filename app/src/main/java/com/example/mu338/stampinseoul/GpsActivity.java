@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -64,8 +65,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
     Button alert, alert_release;
 
-    double lat = 0.0;
-    double lng = 0.0;
+    double lastlat = 0.0;
+    double lastlng = 0.0;
 
     boolean chcked = false;
     private float min = 300.0f;
@@ -74,7 +75,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
     // == 리사이클러뷰
 
-    private ArrayList<GpsData> list = new ArrayList<>();
+    private ArrayList<ThemeData> list = new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private GpsAdapter gpsAdapter;
@@ -108,6 +109,19 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         view = inflater.inflate(R.layout.activity_gps, container, false);
 
+        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+
+        Cursor cursor;
+
+        cursor = MainActivity.db.rawQuery("SELECT * FROM STAMP_"+LoginActivity.userId+";", null);
+
+        if(cursor != null){
+
+            while(cursor.moveToNext()){
+                list.add(new ThemeData(cursor.getString(1), cursor.getString(2), cursor.getDouble(3), cursor.getDouble(4)));
+            }
+        }
+
         // == 로딩 애니메이션
 
         gpsAnimationDialog = new GpsAnimationDialog(view.getContext());
@@ -135,6 +149,23 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         gpsAdapter = new GpsAdapter(R.layout.gps_item, list);
 
         recyclerView.setAdapter(gpsAdapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
+
+            @Override
+            public void onClick(View view, int position) {
+
+                lastlat = list.get(position).getMapX();
+                lastlng = list.get(position).getMapY();
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+
+        }));
 
         // == GPS
 
@@ -169,9 +200,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
 
         // == 플로팅 버튼, 드로어
-
         fab = view.findViewById(R.id.fab);
-        fab1 = view.findViewById(R.id.fab1);
 
         fab_open = AnimationUtils.loadAnimation(view.getContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(view.getContext(), R.anim.fab_close);
@@ -181,7 +210,6 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         ConstraintLayout gps_back = view.findViewById(R.id.gps_back);
 
         fab.setOnClickListener(this);
-        fab1.setOnClickListener(this);
 
         drawer.setOnTouchListener(this);
         dl.setDrawerListener(listener);
@@ -260,21 +288,27 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                 try {
 
-                    win = true;
+                    if(lastlat !=0.0 && lastlng !=0.0) {
 
-                    locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
+                        win = true;
 
-                    Toast.makeText(getActivity(), "GPS기능을 시작합니다.", Toast.LENGTH_SHORT).show();
+                        locManager.addProximityAlert(lastlat, lastlng, min, -1, proximityIntent);
 
-                    /*animationView = view.findViewById(R.id.animation_view);
+                        Toast.makeText(getActivity(), "GPS기능을 시작합니다.", Toast.LENGTH_SHORT).show();
 
-                    if(animationView.isAnimating()){
-                        animationView.cancelAnimation();
-                    }*/
+                        /*animationView = view.findViewById(R.id.animation_view);
 
-                    locationText.setText("GPS기능을 시작합니다.");
+                        if(animationView.isAnimating()){
+                            animationView.cancelAnimation();
+                        }*/
 
-                    gpsTest = true;
+                        locationText.setText("GPS기능을 시작합니다.");
+
+                        gpsTest = true;
+
+                    }else {
+                        Toast.makeText(view.getContext(), "목적지를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                    }
 
                 } catch (SecurityException e) {
 
@@ -321,16 +355,11 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
             case R.id.fab :
 
-                anim();
-
-                break;
-
-            case R.id.fab1 :
-
-                anim();
+                // anim();
                 dl.openDrawer(drawer);
 
                 break;
+
         }
 
     }
@@ -361,16 +390,14 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         //단점은 움직여서 값이 변동이 되야 한다 그래야 작동한다.
         public void onLocationChanged(Location location) {
 
-            lat = location.getLongitude();
+            /*lat = location.getLongitude();
 
             lng = location.getLatitude();
-
-            Log.d("dd", String.valueOf(lat)+" "+ lng);
-
+*/
             if (win) {
 
                 try {
-                    locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
+                    locManager.addProximityAlert(lastlat, lastlng, min, -1, proximityIntent);
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 }
@@ -490,7 +517,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                         locationText.setText("목표반경 50미터 안에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
+                        locManager.addProximityAlert(lastlat, lastlng, min, -1, proximityIntent);
 
                         min = 10.0f;
 
@@ -509,7 +536,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                         locationText.setText("목표반경 100미터 내에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
+                        locManager.addProximityAlert(lastlat, lastlng, min, -1, proximityIntent);
 
                         min = 20.0f;
 
@@ -527,7 +554,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                         locationText.setText("목표반경 200미터 내에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
+                        locManager.addProximityAlert(lastlat, lastlng, min, -1, proximityIntent);
 
                         min = 50.0f;
 
@@ -545,7 +572,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                         locationText.setText("목표반경 300미터 내에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
+                        locManager.addProximityAlert(lastlat, lastlng, min, -1, proximityIntent);
 
                         min = 100.0f;
 
@@ -559,7 +586,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                         animationView4.setVisibility(View.INVISIBLE);
                         animationView5.setVisibility(View.INVISIBLE);
 
-                        locManager.addProximityAlert(37.562961, 127.035202 , min, -1, proximityIntent);
+                        locManager.addProximityAlert(lastlat, lastlng , min, -1, proximityIntent);
 
                         locationText.setText("목표 반경 300미터 근방에 접근했어요.");
 
@@ -677,7 +704,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         return false;
     }
 
-    // 플로팅 버튼 애니메이션 메소드
+    /*// 플로팅 버튼 애니메이션 메소드
     public void anim() {
 
         if (isFabOpen) {
@@ -693,6 +720,6 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
             isFabOpen = true;
 
         }
-    }
+    }*/
 
 }

@@ -5,10 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.database.SQLException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -70,7 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SearchAdapter.MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final SearchAdapter.MyViewHolder myViewHolder, final int position) {
 
         myViewHolder.txtView.setText(list.get(position).getTitle());
 
@@ -91,31 +93,62 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             }
         });
 
+        myViewHolder.Like_heart.setSelected(false);
+
         myViewHolder.Like_heart.setOnClickListener(new View.OnClickListener() {
 
+
+
             @Override
+
             public void onClick(View v) {
+                MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
 
-                if (myViewHolder.Like_heart.isSelected()) {
+                try {
 
-                    myViewHolder.Like_heart.setSelected(false);
+                    if (list.get(position).isHart()) {
 
-                } else {
+                        // 하트 선택 해제
+                        myViewHolder.Like_heart.setSelected(false);
+                        list.get(position).setHart(false);
 
-                    myViewHolder.Like_heart.setSelected(true);
 
-                    myViewHolder.Like_heart.likeAnimation(new AnimatorListenerAdapter() {
+                        String zzimDelete = "DELETE FROM ZZIM_"+LoginActivity.userId+" WHERE title='"+list.get(position).getTitle()+"';";
+                        MainActivity.db.execSQL(zzimDelete);
 
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                        }
+                    } else {
 
-                    });
+                        // 하트 선택
+                        myViewHolder.Like_heart.setSelected(true);
+                        list.get(position).setHart(true);
+
+                        String zzimInsert = "INSERT INTO ZZIM_" + LoginActivity.userId + " VALUES('" + list.get(position).getTitle() + "', '"
+                                + list.get(position).getAddr() + "', '"
+                                + list.get(position).getMapX() + "', '"
+                                + list.get(position).getMapY() + "');";
+
+                        MainActivity.db.execSQL(zzimInsert);
+                        myViewHolder.Like_heart.likeAnimation(new AnimatorListenerAdapter() {
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                            }
+
+                        });
+
+                    }
+
+                }catch(SQLException e){
+
                 }
-
-            }
+            } // onClick
         });
+
+        if (list.get(position).isHart()) {
+            myViewHolder.Like_heart.setSelected(true);
+        }
+
     }
 
 

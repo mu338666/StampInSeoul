@@ -49,6 +49,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     public static Bitmap imagesave = null;
     private ArrayList<CameraData> list = new ArrayList<>();
     private String imageFile;
+    public static String title;
 
     //private MyDB mydb;
     private SQLiteDatabase sqlDB;
@@ -67,6 +68,8 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         edtPola = findViewById(R.id.edtPola);
         edtTitle = findViewById(R.id.edtTitle);
         edtContents = findViewById(R.id.edtContents);
+
+        title=getIntent().getStringExtra("title");
 
 
         // mydb = new MyDB(this);
@@ -95,6 +98,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
         btnCapture.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+        btnExit.setOnClickListener(this);
 
     }
 
@@ -141,14 +145,24 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
             startActivity(intent);*/
 
+
             FragmentTransaction fragmentTransaction =
+
                     getSupportFragmentManager().beginTransaction();
 
             AlbumActivity alb = new AlbumActivity();
 
-            Bundle bundle = new Bundle(); // 파라미터는 전달할 데이터 개수
-            bundle.putSerializable("list", list); // key , value
-            alb.setArguments(bundle);
+            MainActivity.db=MainActivity.dbHelper.getWritableDatabase();
+
+            MainActivity.db.execSQL("UPDATE STAMP_"+LoginActivity.userId+" SET picture='"+imageFilepath
+                    +"', content_pola='"+edtPola.getText().toString() //한줄
+                    +"', content_title='"+edtTitle.getText().toString() //제목
+                    +"', contents='"+edtContents.getText().toString() //내용
+                    +"', complete="+1 //성공여부
+                    +" WHERE title='"+title+"';");
+
+
+            MainActivity.db.close();
 
             finish();
 
@@ -193,18 +207,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             Bitmap bitmapTeep = rotate(bitmap, exifDegres);
 
             imgPhoto.setImageBitmap(bitmapTeep);
-
-            /*sqlDB = mydb.getWritableDatabase();
-
-            sqlDB.execSQL("INSERT INTO carmeraTBL VALUES('" + imageFilepath + "','" +
-
-                    edttext.getText().toString() + "');");
-
-            sqlDB.close();*/
-
-            list.add(new CameraData(imageFilepath, edtPola.getText().toString()
-                    , edtTitle.getText().toString()
-                    , edtTitle.getText().toString()));
 
         }
 
@@ -266,37 +268,5 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         return image;
 
     }
-
-    /*private void selectDB(){
-
-        Cursor cursor=null;
-
-        sqlDB = mydb.getWritableDatabase();
-
-        cursor = sqlDB.rawQuery("SELECT * FROM carmeraTBL;", null);
-
-        list.removeAll(list);
-
-        while (cursor.moveToNext()) {
-
-//            DateSaveList datalist = new DateSaveList();
-
-//            String image = cursor.getString(0);
-
-//            String text = cursor.getString(1);
-
-//            datalist.setImagepsth(image);
-
-//            datalist.setText(text);
-
-            list.add(new DateSaveList(cursor.getString(0), cursor.getString(1)));
-
-        }
-
-        cursor.close();
-
-        sqlDB.close();
-
-    }*/
 
 }

@@ -23,9 +23,9 @@ import java.util.ArrayList;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHolder> {
 
     private int layout;
-    private ArrayList<CameraData> list;
+    private ArrayList<ThemeData> list;
 
-    public AlbumAdapter(int layout, ArrayList<CameraData> list) {
+    public AlbumAdapter(int layout, ArrayList<ThemeData> list) {
         this.layout = layout;
         this.list = list;
     }
@@ -46,16 +46,22 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
     public void onBindViewHolder(@NonNull final AlbumAdapter.CustomViewHolder customViewHolder, final int position) {
 
         // customViewHolder.txtID.setText(list.get(position).getReviewTxtID());
-        customViewHolder.txtPola.setText(list.get(position).getEdtPola());
-        customViewHolder.txtTitle.setText(list.get(position).getEdtTitle());
-        customViewHolder.txtContent.setText(list.get(position).getEdtContents());
+        customViewHolder.txtPola.setText(list.get(position).getContent_pola());
+        customViewHolder.txtTitle.setText(list.get(position).getContent_title());
+        customViewHolder.txtContent.setText(list.get(position).getContents());
 
         customViewHolder.itemView.setTag(position);
 
-        Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getImgPhoto());
+        if (list.get(position).getPicture() != null) {
 
-        ExifInterface exifInterface = null;
+            Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getPicture());
+            customViewHolder.imgReview.setImageBitmap(bitmap);
 
+        } else {
+            customViewHolder.imgReview.setImageResource(R.drawable.a_dialog_design);
+        }
+
+        /*
         try {
 
             exifInterface = new ExifInterface(list.get(position).getImgPhoto());
@@ -80,7 +86,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
 
         customViewHolder.imgReview.setImageBitmap(bitmapTeep);
 
-
+        */
 
     }
 

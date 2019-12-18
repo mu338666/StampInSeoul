@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.CustomViewHolder> {
 
     private int layout;
-    private ArrayList<GpsData> list;
+    private ArrayList<ThemeData> list;
 
-    public GpsAdapter(int layout, ArrayList<GpsData> list) {
+    public GpsAdapter(int layout, ArrayList<ThemeData> list) {
         this.layout = layout;
         this.list = list;
     }
@@ -39,12 +39,12 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.CustomViewHolder
     public void onBindViewHolder(@NonNull final GpsAdapter.CustomViewHolder customViewHolder, final int position) {
 
         // customViewHolder.imaProfile.setImageResource(list.get(position).getMissionImgProfile()); // 값을 넣는다.
-        customViewHolder.txtName.setText(list.get(position).getMissionTxtName());
-        customViewHolder.txtContent.setText(list.get(position).getMissionTxtContent());
+        customViewHolder.txtName.setText(list.get(position).getTitle());
+        customViewHolder.txtContent.setText(list.get(position).getAddr());
 
         customViewHolder.itemView.setTag(position);
 
-        customViewHolder.itemView.setOnClickListener(new View.OnClickListener() { // 이벤트
+        /*customViewHolder.itemView.setOnClickListener(new View.OnClickListener() { // 이벤트
             @Override
             public void onClick(View v) {
 
@@ -53,7 +53,7 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.CustomViewHolder
                 Toast.makeText(v.getContext(), currentName, Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
     }
 

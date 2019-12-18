@@ -1,5 +1,6 @@
 package com.example.mu338.stampinseoul;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentPagerAdapter fragmentPagerAdapter;
     private ViewPager viewPager;
+
+
+    public static DBHelper dbHelper;
+    public static SQLiteDatabase db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +52,11 @@ public class MainActivity extends AppCompatActivity {
             backButtonTime = currentTime;
             Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 }

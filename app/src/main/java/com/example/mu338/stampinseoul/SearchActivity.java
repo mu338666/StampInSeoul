@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -155,6 +156,12 @@ public class SearchActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
 
+                            MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+
+                            Cursor cursor;
+
+                            cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);
+
                             try {
 
                                 JSONObject parse_response = (JSONObject) response.get("response");
@@ -163,7 +170,6 @@ public class SearchActivity extends AppCompatActivity {
                                 JSONArray parse_itemlist = (JSONArray) parse_items.get("item");
 
                                 list.removeAll(list);
-
 
                                 for (int i = 0; i < parse_itemlist.length(); i++) {
 
@@ -174,6 +180,13 @@ public class SearchActivity extends AppCompatActivity {
                                     themeData.setTitle(imsi.getString("title"));
                                     themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
 
+
+                                    while(cursor.moveToNext()){
+                                        if(cursor.getString(0).equals(themeData.getTitle())){
+                                            themeData.setHart(true);
+                                        }
+                                    }
+                                    cursor.moveToFirst();
                                     list.add(themeData);
 
                                 }
@@ -206,6 +219,7 @@ public class SearchActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+
                     }, new Response.ErrorListener() {
 
                         @Override

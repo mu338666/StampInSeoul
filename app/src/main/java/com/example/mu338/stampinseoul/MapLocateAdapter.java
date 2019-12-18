@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.CustomViewHolder> {
 
     private int layout;
-    private ArrayList<MapLocateData> list;
+    private ArrayList<ThemeData> list;
 
     static int number = 0;
 
-    public MapLocateAdapter(int layout, ArrayList<MapLocateData> list) {
+    public MapLocateAdapter(int layout, ArrayList<ThemeData> list) {
         this.layout = layout;
         this.list = list;
     }
@@ -42,8 +42,8 @@ public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.Cust
     @Override
     public void onBindViewHolder(@NonNull final MapLocateAdapter.CustomViewHolder customViewHolder, final int position) {
 
-        customViewHolder.txtName.setText(list.get(position).getTxtName());
-        customViewHolder.txtContent.setText(list.get(position).getTxtContent());
+        customViewHolder.txtName.setText(list.get(position).getTitle());
+        customViewHolder.txtContent.setText(list.get(position).getAddr());
 
         customViewHolder.itemView.setTag(position);
 
@@ -52,7 +52,7 @@ public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.Cust
             @Override
             public void onClick(View v) {
 
-                String str = list.get(position).getTxtName();
+                String str = list.get(position).getTitle();
 
                 Uri uri = Uri.parse("https://www.google.com/search?q="+str+"&oq="+str+"&aqs=chrome");
 
@@ -72,13 +72,13 @@ public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.Cust
 
                 Intent intent = new Intent(v.getContext(), CameraActivity.class);
 
-                v.getContext().startActivity(intent);
+                intent.putExtra("title", list.get(position).getTitle());
 
+                v.getContext().startActivity(intent);
             }
         });
-
-
     }
+
 
     @Override
     public int getItemCount() {

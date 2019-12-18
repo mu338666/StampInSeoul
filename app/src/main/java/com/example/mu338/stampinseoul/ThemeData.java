@@ -2,8 +2,6 @@ package com.example.mu338.stampinseoul;
 
 import java.io.Serializable;
 
-    // ThemeActivity 데이터 클래스.
-
 public class ThemeData implements Serializable {
 
     private String title;
@@ -11,81 +9,246 @@ public class ThemeData implements Serializable {
     private String addr;
     private String tel;
     private String overView;
-    private long mapX;
-    private long mapY;
+    private String picture;
+    private String content_pola;
+    private String content_title;
+    private String contents;
+    private int complete;
+    private double mapX;
+    private double mapY;
     private boolean hart=false;
 
-    public boolean isHart() {
-        return hart;
+
+    public ThemeData(String title, String picture, String content_pola, String content_title, String contents, int complete) {
+
+        this.title = title;
+        this.picture = picture;
+        this.content_pola = content_pola;
+        this.content_title = content_title;
+        this.contents = contents;
+        this.complete = complete;
     }
 
-    public void setHart(boolean hart) {
-        this.hart = hart;
+
+
+    public ThemeData(){
+
     }
 
-    private Integer contentsID;
-
-    public Integer getContentsID() {
-        return contentsID;
-    }
-
-    public void setContentsID(Integer contentsID) {
-        this.contentsID = contentsID;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public long getMapX() {
-        return mapX;
-    }
-
-    public void setMapX(long mapX) {
+    public ThemeData(String title, String addr, double mapX, double mapY) {
+        this.title = title;
+        this.addr = addr;
         this.mapX = mapX;
-    }
-
-    public long getMapY() {
-        return mapY;
-    }
-
-    public void setMapY(long mapY) {
         this.mapY = mapY;
     }
 
-    public String getAddr() {
-        return addr;
+
+
+    public String getPicture() {
+        return picture;
     }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getContent_pola() {
+        return content_pola;
+    }
+
+    public void setContent_pola(String content_pola) {
+
+        this.content_pola = content_pola;
+
+    }
+
+    public String getContent_title() {
+
+        return content_title;
+
+    }
+
+    public void setContent_title(String content_title) {
+
+        this.content_title = content_title;
+
+    }
+
+
+
+    public String getContents() {
+
+        return contents;
+
+    }
+
+
+
+    public void setContents(String contents) {
+
+        this.contents = contents;
+
+    }
+
+
+
+    public int getComplete() {
+
+        return complete;
+
+    }
+
+
+
+    public void setComplete(int complete) {
+
+        this.complete = complete;
+
+    }
+
+
+
+    public boolean isHart() {
+
+        return hart;
+
+    }
+
+
+
+    public void setHart(boolean hart) {
+
+        this.hart = hart;
+
+    }
+
+
+
+    private Integer contentsID;
+
+
+
+    public Integer getContentsID() {
+
+        return contentsID;
+
+    }
+
+
+
+    public void setContentsID(Integer contentsID) {
+
+        this.contentsID = contentsID;
+
+    }
+
+
+
+    public String getTel() {
+
+        return tel;
+
+    }
+
+
+
+    public void setTel(String tel) {
+
+        this.tel = tel;
+
+    }
+
+
+
+    public double getMapX() {
+
+        return mapX;
+
+    }
+
+
+
+    public void setMapX(double mapX) {
+
+        this.mapX = mapX;
+
+    }
+
+
+
+    public double getMapY() {
+
+        return mapY;
+
+    }
+
+
+
+    public void setMapY(double mapY) {
+
+        this.mapY = mapY;
+
+    }
+
+
+
+    public String getAddr() {
+
+        return addr;
+
+    }
+
+
 
     public void setAddr(String addr) {
+
         this.addr = addr;
+
     }
+
+
 
     public String getOverView() {
+
         return overView;
+
     }
+
+
 
     public void setOverView(String overView) {
+
         this.overView = overView;
+
     }
+
+
 
     public String getTitle() {
+
         return title;
+
     }
+
+
 
     public void setTitle(String title) {
+
         this.title = title;
+
     }
 
+
+
     public String getFirstImage() {
+
         return firstImage;
+
     }
 
     public void setFirstImage(String firstImage) {
+
         this.firstImage = firstImage;
     }
+
 }
