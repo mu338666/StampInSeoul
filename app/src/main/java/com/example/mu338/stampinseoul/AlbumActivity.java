@@ -20,20 +20,12 @@ import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 
+    // 내 정보 => 3번 Fragment => AlbumActivity
+
 public class AlbumActivity extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
-    /*private Integer[] reviewImage = { R.drawable.review_test1, R.drawable.review_test2, R.drawable.review_test3};
-
-    private String[] reviewID = { "계정 테스트1", "계정 테스트2" , "계정 테스트3"};
-
-    private String[] reviewTitle = { "테스트1", "테스트2", "테스트3"};
-
-    private String[] reviewContent = { "내용 테스트1", "내용 테스트2", "내용 테스트3"};
-    */
 
     private ArrayList<CameraData> cameraList = new ArrayList<>();
-    private ArrayList<CameraData> cameraList2 = new ArrayList<>();
-
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private AlbumAdapter albumAdapter;
@@ -56,24 +48,21 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
         view = inflater.inflate(R.layout.activity_album, container, false);
 
+
+        // == 리사이클러뷰
+
         recyclerView = view.findViewById(R.id.recyclerView);
 
         linearLayoutManager = new LinearLayoutManager(view.getContext());
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        //Log.d("dd", );
-
-        /*if ( cameraList.isEmpty()){
-            cameraList = (ArrayList<CameraData>) getArguments().getSerializable("list");
-        }*/
-
         albumAdapter = new AlbumAdapter(R.layout.album_item, cameraList);
 
         recyclerView.setAdapter(albumAdapter);
 
-        // == 플로팅 버튼 , 드로어
 
+        // == 플로팅 버튼 , 드로어
         fab = view.findViewById(R.id.fab);
         fab1 = view.findViewById(R.id.fab1);
         fab2 = view.findViewById(R.id.fab2);
@@ -91,10 +80,6 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
         drawer.setOnTouchListener(this);
         drawerLayout.setDrawerListener(listener);
 
-        // == 카메라
-
-        // cameraList = (ArrayList<CameraData>)getActivity().getIntent().getSerializableExtra("list");
-
         return view;
 
     }
@@ -111,32 +96,23 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
                 break;
 
+            // 도장판 이미지 드로어
             case R.id.fab1 :
 
                 anim();
                 drawerLayout.openDrawer(drawer);
 
-                Bundle bundle = new Bundle();
-
-                /*Log.d("dd", cameraList.toString());
-
-                cameraList = (ArrayList<CameraData>) bundle.getSerializable("list");
-
-                Log.d("dd", cameraList.toString());
-
-                albumAdapter.notifyDataSetChanged(); */
-
                 break;
 
-
+            // 카메라 액티비티 이동
             case R.id.fab2 :
 
                 anim();
 
-                Intent intent2 = new Intent(getActivity(), CameraActivity.class);
+                /*Intent intent2 = new Intent(getActivity(), CameraActivity.class);
 
                 startActivity(intent2);
-
+*/
                 break;
 
             default: break;
@@ -172,11 +148,14 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
         }
     };
 
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return false;
     }
 
+
+    // 플로팅 버튼 애니메이션 메소드
     public void anim() {
 
         if (isFabOpen) {

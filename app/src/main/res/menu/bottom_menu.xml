@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_mission"
+        android:id="@+id/action_gps"
         android:enabled="true"
-        android:icon="@drawable/mission"
-        android:title="Mission"
+        android:icon="@drawable/gps"
+        android:title="Gps"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/action_myPage"
+    <item android:id="@+id/action_map"
         android:enabled="true"
-        android:icon="@drawable/my_page"
-        android:title="My Locate"
+        android:icon="@drawable/map"
+        android:title="Map"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_review"

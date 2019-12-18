@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import me.relex.circleindicator.CircleIndicator;
 
+    // 튜토리얼 Fragment 뷰페이저 클래스.
+
 public class MainActivity extends AppCompatActivity {
 
     private long backButtonTime = 0;
@@ -22,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager);
 
-        // 1. 양식 1번
         fragmentPagerAdapter = new tutorialViewPagerAdapter(getSupportFragmentManager());
 
         CircleIndicator indicator = findViewById(R.id.indicator);

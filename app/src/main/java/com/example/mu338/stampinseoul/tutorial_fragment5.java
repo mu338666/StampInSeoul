@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-    // == 튜토리얼 Fragment 4.
+    // == 튜토리얼 Fragment 5.
 
-public class tutorial_fragment4 extends Fragment {
+public class tutorial_fragment5 extends Fragment {
 
     private TextView textView;
     private View view;
@@ -21,11 +21,11 @@ public class tutorial_fragment4 extends Fragment {
 
 
     // 뷰페이저를 통해서 슬라이딩이나 탭키를 눌러서 뷰페이저 프래그먼트가 변경이 되려면 현재 프래그먼트 상태를 저장하는 변수 필요.
-    public static tutorial_fragment4 newInstance(){
+    public static tutorial_fragment5 newInstance(){
 
-        tutorial_fragment4 fragment4 = new tutorial_fragment4();
+        tutorial_fragment5 fragment5 = new tutorial_fragment5();
 
-        return fragment4;
+        return fragment5;
     }
 
 
@@ -34,7 +34,7 @@ public class tutorial_fragment4 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.tutorial_frag4, container, false); // 메인 액티비티의 setContentView와 같음.
+        view = inflater.inflate(R.layout.tutorial_frag5, container, false); // 메인 액티비티의 setContentView와 같음.
 
         textView = view.findViewById(R.id.textView);
 

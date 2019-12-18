@@ -16,7 +16,7 @@
         android:layout_marginTop="208dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="튜토리얼 프래그 4번"
+        android:text="튜토리얼 프래그 6번"
         android:textSize="24sp"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"

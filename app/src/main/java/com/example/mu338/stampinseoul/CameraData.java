@@ -2,7 +2,7 @@ package com.example.mu338.stampinseoul;
 
 import java.io.Serializable;
 
-
+    // CameraActivity의 Data 클래스
 
 public class CameraData implements Serializable {
 

@@ -14,11 +14,11 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
+    // == Gps 로딩 애니메이션 클래스.
+
 public class GpsAnimationDialog extends ProgressDialog {
 
     private Context c;
-    // private ImageView imgGps;
-
 
     public GpsAnimationDialog(Context context) {
         super(context);
@@ -28,19 +28,12 @@ public class GpsAnimationDialog extends ProgressDialog {
         setCanceledOnTouchOutside(false);
 
         c = context;
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gps_roading_animation);
-
-        /*imgGps = findViewById(R.id.gps_image);
-
-        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(imgGps);
-        Glide.with(c).load(R.drawable.markeranimaition).into(gifImage);
-        */
 
         LottieAnimationView animationView = findViewById(R.id.animation_view);
         animationView.setAnimation("location_search.json");

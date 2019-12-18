@@ -1,5 +1,7 @@
 package com.example.mu338.stampinseoul;
 
+    // AlbumActivity 데이터 클래스
+
 public class AlbumData {
 
     private String reviewTxtID;

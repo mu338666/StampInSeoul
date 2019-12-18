@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+    // == 튜토리얼 Fragment 1.
+
 public class tutorial_fragment1 extends Fragment {
 
     private TextView textView;
@@ -25,7 +27,6 @@ public class tutorial_fragment1 extends Fragment {
         return fragment1;
     }
 
-    // onCreate()와 같은 기능.
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

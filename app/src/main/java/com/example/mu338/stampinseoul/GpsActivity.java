@@ -43,13 +43,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.Random;
 
+    // == 내 정보 => 1번 Fragment => GpsActivity
+
 public class GpsActivity extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
     boolean win = false;
 
     private static final String TAG = "MainActivity";
-
-    // Log.d(TAG,"");
 
     LocationManager locManager;
     AlertReceiver receiver;
@@ -67,15 +67,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
     double lat = 0.0;
     double lng = 0.0;
 
-    GoogleMap gMap;
-    GroundOverlayOptions cctvMark;
-    ArrayList<MarkerOptions> cctvList = new ArrayList<MarkerOptions>();
     boolean chcked = false;
     private float min = 300.0f;
 
     private boolean gpsTest = false;
 
     // == 리사이클러뷰
+
     private ArrayList<GpsData> list = new ArrayList<>();
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -96,7 +94,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
     int[] img = {R.drawable.gps_back1, R.drawable.gps_back2, R.drawable.gps_back3, R.drawable.gps_back4 };
 
-    LottieAnimationView animationView = null;
+    // == 애니메이션
+
+    LottieAnimationView animationView1 = null;
+    LottieAnimationView animationView2 = null;
+    LottieAnimationView animationView3 = null;
+    LottieAnimationView animationView4 = null;
+    LottieAnimationView animationView5 = null;
 
     @Nullable
     @Override
@@ -160,8 +164,6 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         }
 
-        // ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
-
         alert.setOnClickListener(this);
         alert_release.setOnClickListener(this);
 
@@ -197,28 +199,44 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         String[] s = {"red_wave.json", "blue_wave.json", "yellow_wave.json", "green_wave.json", "black_wave.json"};
 
-        animationView = view.findViewById(R.id.animation_view);
+        animationView1 = view.findViewById(R.id.animation_view1);
+        animationView2 = view.findViewById(R.id.animation_view2);
+        animationView3 = view.findViewById(R.id.animation_view3);
+        animationView4 = view.findViewById(R.id.animation_view4);
+        animationView5 = view.findViewById(R.id.animation_view5);
 
-        /*for ( int i = 0 ; i < s.length ; i++){
+        animationView1.cancelAnimation();
+        animationView1.setAnimation("black_wave.json");
+        animationView1.loop(true);
+        animationView1.playAnimation();
 
-            if(animationView.isAnimating() == true){
-                animationView.cancelAnimation();
-                animationView.setAnimation(s[i]);
-                animationView.loop(true);
-                animationView.playAnimation();
-            }else {
-                animationView.setAnimation(s[i]);
-                animationView.loop(true);
-                animationView.playAnimation();
-            }
+        animationView2.cancelAnimation();
+        animationView2.setAnimation("red_wave.json");
+        animationView2.loop(true);
+        animationView2.playAnimation();
 
-        }*/
+        animationView2.setVisibility(View.INVISIBLE);
 
-            animationView.cancelAnimation();
-            animationView.setAnimation("black_wave.json");
-            animationView.loop(true);
-            animationView.playAnimation();
+        animationView3.cancelAnimation();
+        animationView3.setAnimation("blue_wave.json");
+        animationView3.loop(true);
+        animationView3.playAnimation();
 
+        animationView3.setVisibility(View.INVISIBLE);
+
+        animationView4.cancelAnimation();
+        animationView4.setAnimation("yellow_wave.json");
+        animationView4.loop(true);
+        animationView4.playAnimation();
+
+        animationView4.setVisibility(View.INVISIBLE);
+
+        animationView5.cancelAnimation();
+        animationView5.setAnimation("green_wave.json");
+        animationView5.loop(true);
+        animationView5.playAnimation();
+
+        animationView5.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -244,15 +262,15 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     win = true;
 
-                    locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+                    locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
 
                     Toast.makeText(getActivity(), "GPS기능을 시작합니다.", Toast.LENGTH_SHORT).show();
 
-                    animationView = view.findViewById(R.id.animation_view);
+                    /*animationView = view.findViewById(R.id.animation_view);
 
                     if(animationView.isAnimating()){
                         animationView.cancelAnimation();
-                    }
+                    }*/
 
                     locationText.setText("GPS기능을 시작합니다.");
 
@@ -272,16 +290,11 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                 min=300.0f;
 
-                if(animationView.isAnimating()){
-                    animationView.cancelAnimation();
-                }
-
-                animationView = view.findViewById(R.id.animation_view);
-
-                animationView.setAnimation("black_wave.json");
-                animationView.loop(true);
-                // animationView.setRe
-                animationView.playAnimation();
+                animationView1.setVisibility(View.VISIBLE);
+                animationView2.setVisibility(View.INVISIBLE);
+                animationView3.setVisibility(View.INVISIBLE);
+                animationView4.setVisibility(View.INVISIBLE);
+                animationView5.setVisibility(View.INVISIBLE);
 
                 try {
 
@@ -346,7 +359,6 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
     final LocationListener gpsLocationListener = new LocationListener() {
 
         //단점은 움직여서 값이 변동이 되야 한다 그래야 작동한다.
-
         public void onLocationChanged(Location location) {
 
             lat = location.getLongitude();
@@ -358,7 +370,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
             if (win) {
 
                 try {
-                    locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+                    locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 }
@@ -366,24 +378,12 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
             if(gpsTest){
 
-                if(animationView.isAnimating() == true){
-                    animationView.cancelAnimation();
-                }
-
                 Toast.makeText(getContext(), "목표반경 300미터 밖에 있습니다.", Toast.LENGTH_LONG).show();
-
-                animationView.setAnimation("black_wave.json");
-                animationView.loop(true);
-                animationView.playAnimation();
 
                 locationText.setText("목표반경 300미터 밖에 있어요.");
 
             }
 
-
-
-//            chcked = true;
-//            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(MainActivity.this);
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -444,7 +444,6 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
 
     // gps 값 받는 브로드캐스트 리시버 내부클래스
-
     public class AlertReceiver extends BroadcastReceiver {
 
         @SuppressLint("MissingPermission")
@@ -453,7 +452,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
             boolean isEntering = intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false);
 
-            animationView = view.findViewById(R.id.animation_view);
+            //animationView = view.findViewById(R.id.animation_view);
 
             Log.d(TAG, "AlertReceiver" + isEntering);
 
@@ -466,17 +465,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 10 :
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.VISIBLE);
 
                         Toast.makeText(context, "목표지점에 도착 했습니다.", Toast.LENGTH_LONG).show();
-
-                        // dl.setBackgroundColor(Color.YELLOW);
-
-                        animationView.setAnimation("green_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
 
                         locationText.setText("목표지점에 도착했어요.");
 
@@ -485,22 +480,17 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 20:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.VISIBLE);
 
                         Toast.makeText(context, "목표반경 50미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
 
-
-                        // dl.setBackgroundColor(Color.YELLOW);
-
-                        animationView.setAnimation("green_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
-
                         locationText.setText("목표반경 50미터 안에 들어왔어요.");
 
-                        //Log.d(TAG,"4번");
+                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
 
                         min = 10.0f;
 
@@ -508,91 +498,73 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 50:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.VISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         Toast.makeText(context, "목표반경 100미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
-                        // dl.setBackgroundColor(Color.BLUE);
-
-
-                        animationView.setAnimation("yellow_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
 
                         locationText.setText("목표반경 100미터 내에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
 
                         min = 20.0f;
-                        //Log.d(TAG,"3번");
 
                         break;
 
                     case 100:
 
-                        if(animationView.isAnimating() == true){
-
-                            animationView.cancelAnimation();
-
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.VISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         Toast.makeText(context, "목표반경 200미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
-                        // dl.setBackgroundColor(Color.RED);
-
-                        animationView.setAnimation("blue_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
 
                         locationText.setText("목표반경 200미터 내에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
 
                         min = 50.0f;
-                        //Log.d(TAG,"2번");
-
-
 
                         break;
 
                     case 200:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.VISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         Toast.makeText(context, "목표반경 300미터 안에 들어왔습니다.", Toast.LENGTH_LONG).show();
-                        //dl.setBackgroundColor(Color.GREEN);
-
-                        animationView.setAnimation("red_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
 
                         locationText.setText("목표반경 300미터 내에 들어왔어요.");
 
-                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+                        locManager.addProximityAlert(37.562961, 127.035202, min, -1, proximityIntent);
 
-                        //Log.d(TAG,"1번");
                         min = 100.0f;
 
                         break;
 
                     case 300 :
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
-                        animationView.setAnimation("red_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.VISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
-                        locManager.addProximityAlert(37.562211, 127.035173 , min, -1, proximityIntent);
+                        locManager.addProximityAlert(37.562961, 127.035202 , min, -1, proximityIntent);
 
                         locationText.setText("목표 반경 300미터 근방에 접근했어요.");
 
                         gpsTest = false;
 
-                        //Log.d(TAG,"1번");
                         min = 200.0f;
 
                         break;
@@ -609,15 +581,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 20:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.VISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         Toast.makeText(context, "목표반경 50미터 멀어졌습니다.", Toast.LENGTH_LONG).show();
-
-                        animationView.setAnimation("yellow_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
 
                         locationText.setText("목표반경 50미터 내에서 벗어났어요.");
 
@@ -627,15 +597,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 50:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.VISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         Toast.makeText(context, "목표반경 50미터 멀어졌습니다.", Toast.LENGTH_LONG).show();
-
-                        animationView.setAnimation("blue_wave.json");
-                        animationView.loop(true);
-                        animationView.playAnimation();
 
                         locationText.setText("목표반경 50미터 내에서 벗어났어요.");
 
@@ -645,16 +613,13 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 100:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
+                        animationView1.setVisibility(View.INVISIBLE);
+                        animationView2.setVisibility(View.VISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         Toast.makeText(context, "목표반경 100미터 멀어졌습니다.", Toast.LENGTH_LONG).show();
-
-                        animationView.setAnimation("red_wave.json");
-                        animationView.loop(true);
-                        // animationView.setRe
-                        animationView.playAnimation();
 
                         locationText.setText("목표반경 100미터 내에서 벗어났어요.");
 
@@ -663,16 +628,11 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     case 200:
 
-                        if(animationView.isAnimating() == true){
-                            animationView.cancelAnimation();
-                        }
-
-                        Toast.makeText(context, "목표에서 200미터 멀어졌습니다", Toast.LENGTH_LONG).show();
-
-                        animationView.setAnimation("black_wave.json");
-                        animationView.loop(true);
-                        // animationView.setRe
-                        animationView.playAnimation();
+                        animationView1.setVisibility(View.VISIBLE);
+                        animationView2.setVisibility(View.INVISIBLE);
+                        animationView3.setVisibility(View.INVISIBLE);
+                        animationView4.setVisibility(View.INVISIBLE);
+                        animationView5.setVisibility(View.INVISIBLE);
 
                         locationText.setText("목표반경 200미터 내에서 벗어났어요.");
 
@@ -717,6 +677,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         return false;
     }
 
+    // 플로팅 버튼 애니메이션 메소드
     public void anim() {
 
         if (isFabOpen) {

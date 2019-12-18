@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import xyz.hanks.library.bang.SmallBangView;
 
+    // == SearchActivity 어댑터 클래스. 하트 찍기
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 

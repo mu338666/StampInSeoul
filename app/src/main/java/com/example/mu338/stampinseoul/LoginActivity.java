@@ -31,6 +31,7 @@ import com.kakao.util.exception.KakaoException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+    // LoginActivity. 로그인 처리 클래스
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,8 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Session.getCurrentSession().checkAndImplicitOpen(); // 자동 로그인
 
-        // ==
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +68,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
         btnGuestLogin.setEnabled(false);
-
         btnGuestLogin.setOnClickListener(this);
 
     }

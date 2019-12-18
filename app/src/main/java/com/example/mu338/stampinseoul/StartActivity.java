@@ -4,14 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-/*import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.util.Base64;
-import android.util.Log;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;*/
+    // StartActivity. 어플 시작시 로딩 제공.
 
 public class StartActivity extends Activity {
 
@@ -32,6 +25,8 @@ public class StartActivity extends Activity {
         finish();
 
     }
+
+    // 개인 카카오 키 해시 발급 메소드
 
     /*private void getHashKey(){
         PackageInfo packageInfo = null;

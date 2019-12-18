@@ -35,7 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-// 쇼핑 테마
+    // == ThemeActivity. 문화 테마 Fragment.
+
 public class Theme_culture_frag extends Fragment {
     private View view;
     ProgressDialog pDialog;

@@ -1,78 +1,134 @@
 package com.example.mu338.stampinseoul;
 
+import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.CustomViewHolder> {
-                                    // 리사이클러뷰 어댑터, 메인 어댑터에서 제공되는 내부클래스를 쓰는것, CustomViewHolder는 내가 직접 만드는것.
-                                    // 3개의 메소드인데, 리스트뷰 메소드 4개가 포함되어있음.
+    // MoreActivity 어댑터 클래스.
 
-    // 1. private Context context : onCreateViewHolder에서 ViewGroup으로 제공이 된다.
-    private int layout;
-    private ArrayList<String> list;
+public class MoreAdapter extends BaseExpandableListAdapter /*RecyclerView.Adapter<MoreAdapter.CustomViewHolder>*/ {
 
-    private LayoutInflater layoutInflater;
+    private ArrayList<String> groupList;
+    private ArrayList<ArrayList<String>> chileList;
 
-    public MoreAdapter(int layout, ArrayList<String> list) {
-        this.layout = layout;
-        this.list = list;
+    private LayoutInflater inflater = null;
+    private ViewHolder viewHolder = null;
+
+    public MoreAdapter(Context c, ArrayList<String> groupList, ArrayList<ArrayList<String>> chileList) {
+        this.inflater = LayoutInflater.from(c);
+        this.groupList = groupList;
+        this.chileList = chileList;
     }
 
-
-    // 뷰 홀더에 있는 화면을 객체화해서 해당된 viewHolder 리턴한다.
-    @NonNull
-    @Override // getView와 같음.
-    public MoreAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-
-        // 이 view는 밑 내부클래스 생성자인 itemView에 넘겨줌. 레이아웃 인플레이터
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout, viewGroup, false);
-
-        // 해당된 뷰 홀더의 아이디를 찾는다.
-        CustomViewHolder viewHolder = new CustomViewHolder(view);
-
-        return viewHolder;
-    }
-
-    // customViewHolder : 뷰 홀더의 정보가 들어옴. 값을 넣는다.
+    // 부모 리스트
     @Override
-    public void onBindViewHolder(@NonNull final MoreAdapter.CustomViewHolder customViewHolder, final int position) {
-
-        // customViewHolder.imaProfile.setImageResource(list.get(position).getMissionImgProfile()); // 값을 넣는다.
-        customViewHolder.txtContent.setText(list.get(position));
-
-        customViewHolder.itemView.setTag(position);
-
+    public Object getGroup(int groupPosition) {
+        return groupList.get(groupPosition);
     }
 
-    @Override // 리스트의 사이즈를 준다.
-    public int getItemCount() {
-        return (list != null) ? (list.size()) : (0); // 리스트에 값이 들어있으면 ~
+    @Override
+    public int getGroupCount() {
+        return groupList.size();
     }
 
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
 
-    // =========== 내부 클래스
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-    // 상속을 받아야됨. // 생성자를 만들어줄것
-    // 홀더뷰가 객체화 되면 파인드뷰아이디를 여기서 찾아줌.
-    // getView를 분업화. 인플레이터, 바인딩, 파인드 뷰 아이디.
-    // 매치는 onBindViewHolder에서 해줌.
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+        if( convertView == null ){
 
-        public TextView txtContent;
+            viewHolder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.more_item, parent, false);
 
-        public CustomViewHolder(@NonNull View itemView) {
-            super(itemView);
+            viewHolder.txtContent = convertView.findViewById(R.id.txtContent);
+            viewHolder.imgArrow = convertView.findViewById(R.id.imgArrow);
 
-            txtContent = itemView.findViewById(R.id.txtContent);
-
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        if ( isExpanded ){
+            viewHolder.imgArrow.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
+        }else{
+            viewHolder.imgArrow.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
+        }
+
+        viewHolder.txtContent.setText(groupList.get(groupPosition));
+
+        return convertView;
     }
+
+
+    // 자식 리스트
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return chileList.get(groupPosition).get(childPosition);
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return chileList.get(groupPosition).size();
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+        if( convertView == null ){
+
+            viewHolder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.more_item_child, parent, false);
+
+            viewHolder.txtContentChild = convertView.findViewById(R.id.txtContentChild);
+
+            convertView.setTag(viewHolder);
+
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        viewHolder.txtContentChild.setText(chileList.get(groupPosition).get(childPosition));
+
+        return convertView;
+    }
+
+
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    public class ViewHolder{
+
+        public ImageView imgArrow;
+        public TextView txtContent;
+        public TextView txtContentChild;
+
+    }
+
 }

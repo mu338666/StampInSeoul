@@ -1,5 +1,7 @@
 package com.example.mu338.stampinseoul;
 
+    // == GpsActivity 데이터 클래스.
+
 public class GpsData {
 
     private String missionTxtName;

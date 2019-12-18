@@ -38,6 +38,8 @@ import java.util.ArrayList;
 
 import xyz.hanks.library.bang.SmallBangView;
 
+    // ThemeActiviy 어댑터 클래스.
+
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder> {
 
     int i=0;
@@ -47,7 +49,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
     ArrayList<ThemeData> list;
 
     int layout;
-    // Hashtable<Integer, ThemeData> item;
 
     View view;
     View viewDialog;
@@ -86,50 +87,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
         Glide.with(context).load(list.get(position).getFirstImage()).into(holder.imgView);
 
-
-       /* Thread thread = new Thread(){
-
-            @Override
-            public void run(){
-
-                try{
-
-                    URL url = new URL(list.get(position).getFirstImage());
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    conn.setDoInput(true);
-
-                    conn.connect();
-
-                    InputStream is = conn.getInputStream();
-
-                    bitmap = BitmapFactory.decodeStream(is);
-
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-
-        };
-
-        thread.start();
-
-        try {
-
-            thread.join();
-
-            holder.imgView.setImageBitmap(bitmap);
-
-        }catch (InterruptedException e){
-
-        }*/
-
-
-        // loadImageInBackground(list.get(position).getFirstImage(), context);
-        // Log.d(TAG, list.get(position).getTitle()+"   "+list.get(position).getFirstImage()+"   "+(i++));
         holder.itemView.setTag(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -144,28 +101,9 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
             }
         });
 
-        /*holder.imagebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(list.get(position).isHart()){
-
-                    holder.imagebtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-
-                    list.get(position).setHart(false);
-
-                }else{
-
-                    holder.imagebtn.setImageResource(R.drawable.ic_favorite_black_24dp);
-
-                    list.get(position).setHart(true);
-
-                }
-
-            }
-        });*/
 
         holder.Like_heart.setSelected(false);
+
         holder.Like_heart.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -199,10 +137,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-      //  public ImageView imgView;
         public TextView txtView;
         public ImageView imgView;
-        public ImageView imagebtn;
 
         public SmallBangView Like_heart;
         public ImageView imageHeart;
@@ -212,7 +148,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
             txtView = itemView.findViewById(R.id.txtView);
             imgView = itemView.findViewById(R.id.imgView);
-            //imagebtn = itemView.findViewById(R.id.imagebtn);
 
             Like_heart = itemView.findViewById(R.id.like_heart);
             imageHeart = itemView.findViewById(R.id.imageHeart);
@@ -225,33 +160,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
         return list != null ? list.get(position) : null;
     }
 
-    /*public void loadImageInBackground(String str, Context context) {
-
-
-        Target target = new Target() {
-
-            @Override
-            public void onPrepareLoad(Drawable arg0) {
-
-
-        }
-
-            @Override
-            public void onBitmapLoaded(Bitmap arg0, Picasso.LoadedFrom arg1) {
-
-                imgView.setImageBitmap(arg0);
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable arg0) {
-                // TODO Auto-generated method stub
-            }
-        };
-
-        Picasso.with(context)
-                .load(str)
-                .into(target);
-    }*/
 
     class AsyncTaskClassSub extends android.os.AsyncTask<Integer, ThemeData, ThemeData> {
 
@@ -265,15 +173,9 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
             int position = integers[0];
 
-            //Log.d(TAG, "TwoFrag의 asynckTask에서 받는 포지션 : "+position);
-
-            // ThemeData themeData = getData(contentIdList.get(position));
-
             ThemeData myThemeData1 = list.get(position);
 
             ThemeData themeData = getData(myThemeData1.getContentsID());
-
-            // publishProgress(themeData);
 
             return themeData;
         }
@@ -308,7 +210,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-            dialog.setContentView(viewDialog); // 이미지가 들어감
+            dialog.setContentView(viewDialog);
             dialog.show();
 
             btnExit.setOnClickListener(new View.OnClickListener() {
@@ -343,19 +245,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
                             JSONObject parse_items = (JSONObject) parse_body.get("items");
                             JSONObject parse_itemlist = (JSONObject) parse_items.get("item");
 
-                            //list.removeAll(list);
-
-                            // detailThemeData = null;
                             detailThemeData.setFirstImage(parse_itemlist.getString("firstimage"));
                             detailThemeData.setTitle(parse_itemlist.getString("title"));
                             detailThemeData.setAddr(parse_itemlist.getString("addr1"));
                             detailThemeData.setOverView(parse_itemlist.getString("overview"));
-
-                            //Toast.makeText(getActivity(), "봐야됨 "+ parse_itemlist.getString("addr1"), Toast.LENGTH_SHORT).show();
-
-                            //list.add(detailThemeData);
-
-                            // Log.d(TAG, " Two frg : "+detailThemeData.getTitle());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -371,7 +264,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
                     }
                 });
         queue.add(jsObjRequest);
-        // Log.d(TAG, "getDATA에서 : "+detailThemeData);
 
         try {
             Thread.sleep(1000);

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+    // == 각 테마 Fragment 관리하는 뷰 페이저 어댑터 클래스.
 
 public class ThemeViewPagerAdapter extends FragmentStatePagerAdapter {
 

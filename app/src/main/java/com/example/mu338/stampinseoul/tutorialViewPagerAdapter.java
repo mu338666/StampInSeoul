@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+    // == 각 튜토리얼 Fragment 관리하는 뷰 페이저 어댑터 클래스.
+
 public class tutorialViewPagerAdapter extends FragmentPagerAdapter {
 
     public tutorialViewPagerAdapter(FragmentManager fm) {
@@ -32,6 +34,18 @@ public class tutorialViewPagerAdapter extends FragmentPagerAdapter {
 
                 return tutorial_fragment4.newInstance();
 
+            case 4:
+
+                return tutorial_fragment5.newInstance();
+
+            case 5:
+
+                return tutorial_fragment6.newInstance();
+
+            case 6:
+
+                return tutorial_fragment7.newInstance();
+
             default:
                 return null;
         }
@@ -39,7 +53,7 @@ public class tutorialViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 7;
     }
 
 

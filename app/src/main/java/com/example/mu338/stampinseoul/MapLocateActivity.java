@@ -40,14 +40,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+    // == 내 정보 => 2번 Fragment => MapLocateActivity
 
 public class MapLocateActivity extends Fragment implements OnMapReadyCallback, View.OnTouchListener, View.OnClickListener {
-
-    /*private String[] locatiomName = { "미래능력 개발교육원", "남산 타워", "북촌 한옥마을"};
-
-    private String[] locationInfo = { "위치 정보", "위치 정보" , "위치 정보"};*/
-
-    // ArrayList<LatLng> list2 = new ArrayList<>();
 
     static final String TAG = "MapLocateActivity";
 
@@ -108,7 +103,6 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
 
         // ===== 맵
 
-
         mapView = view1.findViewById(R.id.fgGoogleMap);
 
         mapView.onCreate(savedInstanceState);
@@ -121,7 +115,6 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
 
 
         // 리사이클 아이템 클릭시 이벤트
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
 
             @Override

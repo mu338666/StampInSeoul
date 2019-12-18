@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+    // 바텀 네비게이션 메뉴. 4개 Fragment 컨트롤
+
 public class BottomMenuActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomMenu;
@@ -36,22 +38,6 @@ public class BottomMenuActivity extends AppCompatActivity {
         albumActivity = new AlbumActivity();
         moreActivity = new MoreActivity();
 
-        /*
-        Intent intent = getIntent();
-
-        strNickname = intent.getStringExtra("name");
-        strProfile = intent.getStringExtra("profile");
-
-        MoreActivity fragment = new MoreActivity();
-        Bundle bundle = new Bundle();
-        bundle.putString("name", strNickname);
-        bundle.putString("profile", strProfile);
-        fragment.setArguments(bundle);
-
-
-        Toast.makeText(getApplicationContext(), strNickname+" 님, 환영합니다!", Toast.LENGTH_SHORT).show();
-        */
-
         setChangeFragment(0);
 
         bottomMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,14 +47,14 @@ public class BottomMenuActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
 
-                    case R.id.action_mission:
+                    case R.id.action_gps:
 
                         // 프래그먼트 화면전환
                         setChangeFragment(0);
 
                         break;
 
-                    case R.id.action_myPage:
+                    case R.id.action_map:
 
                         setChangeFragment(1);
 
@@ -111,7 +97,7 @@ public class BottomMenuActivity extends AppCompatActivity {
 
             case 1:
 
-                // 프레그먼트 충돌로 MapView 형식 이용.
+                // 프레그먼트 충돌로 구글맵에 Fragment가 아닌 MapView 형식 이용.
 
                 MapLocateActivity mainFragment = new MapLocateActivity();
                 getSupportFragmentManager().beginTransaction()

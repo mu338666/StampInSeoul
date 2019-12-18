@@ -2,6 +2,8 @@ package com.example.mu338.stampinseoul;
 
 import java.io.Serializable;
 
+    // ThemeActivity 데이터 클래스.
+
 public class ThemeData implements Serializable {
 
     private String title;

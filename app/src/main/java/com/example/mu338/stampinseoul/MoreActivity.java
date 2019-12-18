@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+    // == 내 정보 => 4번째 Fragment => MoreActivity
+
 public class MoreActivity extends Fragment {
 
     private String[] txtContent = { "내 정보", "고객 센터", "이용 약관", "App 정보"};
@@ -36,6 +39,8 @@ public class MoreActivity extends Fragment {
 
     private View view;
 
+    // == 카카오
+
     private Button btnLogout;
     private ImageView imgKakao;
     private TextView txtKakaoName;
@@ -43,88 +48,66 @@ public class MoreActivity extends Fragment {
     String strNickname, strProfile;
     Bitmap bitmap;
 
+    // == ExpandableList 펼치고 접는 리스트뷰
+
+    private ExpandableListView eListView;
+
+    private ArrayList<String> groupList = new ArrayList<>();
+    private ArrayList<ArrayList<String>> childList = new ArrayList<>();
+
+    private ArrayList<String> chileListContent1 = new ArrayList<>();
+    private ArrayList<String> chileListContent2 = new ArrayList<>();
+    private ArrayList<String> chileListContent3 = new ArrayList<>();
+    private ArrayList<String> chileListContent4 = new ArrayList<>();
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.activity_more, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        eListView = view.findViewById(R.id.eListView);
 
-        linearLayoutManager = new LinearLayoutManager(view.getContext());
+        groupList.add("내 정보");
+        groupList.add("고객 센터");
+        groupList.add("이용 약관");
+        groupList.add("App 정보");
 
-        recyclerView.setLayoutManager(linearLayoutManager);
+        chileListContent1.add("내 정보 테스트 입니다.");
+        chileListContent2.add("고객 센터 테스트 입니다.");
+        chileListContent3.add("이용 약관 테스트 입니다.");
+        chileListContent4.add("App 정보 테스트 입니다.");
 
-        list.removeAll(list);
+        childList.add(chileListContent1);
+        childList.add(chileListContent2);
+        childList.add(chileListContent3);
+        childList.add(chileListContent4);
 
-        for(int i = 0 ; i < txtContent.length ; i++){
+        eListView.setAdapter(new MoreAdapter(view.getContext(), groupList, childList));
 
-            list.add(txtContent[i]);
-        }
+        // 그룹 클릭 했을때 이벤트
+        eListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+              @Override
+              public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
 
-        moreAdapter = new MoreAdapter(R.layout.more_item, list);
+                  return false;
+              }
+          });
 
-        recyclerView.setAdapter(moreAdapter);
+        // 자식 클릭 했을때 이벤트
+        eListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+
+                return false;
+            }
+        });
+
 
         btnLogout = view.findViewById(R.id.btnLogout);
-
-        /*
-        Bundle extra = this.getArguments();
-
-        if(extra != null ){
-
-            extra = getArguments();
-
-            strNickname = extra.getString("name");
-            strProfile = extra.getString("profile");
-
-            txtKakaoName.setText(strNickname);
-
-            Thread thread = new Thread(){
-
-                @Override
-                public void run(){
-
-                    try{
-
-                        URL url = new URL(strProfile);
-
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                        conn.setDoInput(true);
-
-                        conn.connect();
-
-                        InputStream is = conn.getInputStream();
-
-                        bitmap = BitmapFactory.decodeStream(is);
-
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-
-            };
-
-            thread.start();
-
-            try {
-
-                thread.join();
-
-                imgKakao.setImageBitmap(bitmap);
-
-            }catch (InterruptedException e){
-
-            }
-
-        }
-        */
-
-
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,15 +120,7 @@ public class MoreActivity extends Fragment {
         return view;
     }
 
-    /*private void onClickLogout() {
-        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-            @Override
-            public void onCompleteLogout() {
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-    }*/
+
     private void onClickLogout() {
         UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
             @Override

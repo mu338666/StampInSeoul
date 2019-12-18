@@ -1,6 +1,5 @@
 package com.example.mu338.stampinseoul;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -33,6 +32,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+    // == ThemeActivity => 검색 하면 이동 되는 액티비티
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -68,12 +68,6 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String word = intent.getStringExtra("word");
 
-
-//        AsyncTaskClassSearch async = new AsyncTaskClassSearch();
-
-//        async.execute(word);
-
-
         btnSearch2.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -86,10 +80,6 @@ public class SearchActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(), "두 글자 이상 입력해 주세요", Toast.LENGTH_LONG).show();
                 }
-
-//                AsyncTaskClassSearch async = new AsyncTaskClassSearch();
-
-//                async.execute(edt_search2.getText().toString().trim());
 
             }
         });

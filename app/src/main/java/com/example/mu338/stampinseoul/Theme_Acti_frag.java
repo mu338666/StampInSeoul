@@ -31,7 +31,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-// 쇼핑 테마
+    // == ThemeActivity. 활동 테마 Fragment.
+
 public class Theme_Acti_frag extends Fragment {
 
     private View view;

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+    // == MapLocateActivity 어댑터 클래스.
+
 public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.CustomViewHolder> {
 
     private int layout;
@@ -63,32 +65,40 @@ public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.Cust
             }
         });
 
+        customViewHolder.imgPhoto.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(v.getContext(), CameraActivity.class);
+
+                v.getContext().startActivity(intent);
+
+            }
+        });
+
+
     }
 
-    @Override // 리스트의 사이즈를 준다.
+    @Override
     public int getItemCount() {
         return (list != null) ? (list.size()) : (0); // 리스트에 값이 들어있으면 ~
     }
 
-
-    // =========== 내부 클래스
-
-    // 상속을 받아야됨. // 생성자를 만들어줄것
-    // 홀더뷰가 객체화 되면 파인드뷰아이디를 여기서 찾아줌.
-    // getView를 분업화. 인플레이터, 바인딩, 파인드 뷰 아이디.
-    // 매치는 onBindViewHolder에서 해줌.
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imaProfile;
+        public ImageView imgPhoto;
+
         public TextView txtName;
         public TextView txtContent;
 
-
-        // 아이템뷰에는 뷰 홀더가 객체가 된 레이아웃 주소가 전달이 됨.
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imaProfile = itemView.findViewById(R.id.fImgProfile);
+            imgPhoto = itemView.findViewById(R.id.fImgCamera);
+
             txtName = itemView.findViewById(R.id.fTxtName);
             txtContent = itemView.findViewById(R.id.txtContent);
 

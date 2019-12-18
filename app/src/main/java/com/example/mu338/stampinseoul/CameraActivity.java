@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+    // 내정보 => 3번 Fragment => AlbumActivity에서 버튼 눌러 이동 => CameraActivity
 
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -76,12 +77,12 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onPermissionGranted() {
-                toastDispaly("on");
+
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                toastDispaly("off");
+
             }
 
         }).setRationaleMessage("카메라권한 필요합니다.")
@@ -257,7 +258,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         String string = date.format(new Date());
         imageFile = "test_" + string + "_";
 
-        //외부장치의 디렉토리
+        // 외부장치의 디렉토리
         File directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFile, ".jpg", directory);
         imageFilepath = image.getAbsolutePath();

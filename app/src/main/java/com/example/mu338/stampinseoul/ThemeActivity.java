@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+    // 로그인 후 보이는 첫 화면. 각 테마들 관리 액티비티.
 
 public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, ViewPager.OnPageChangeListener, View.OnClickListener {
 
@@ -46,14 +47,8 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
     private long backButtonTime = 0;
 
-    private ArrayList<ThemeFavoritesData> list = new ArrayList<>();
-    private RecyclerView recyclerView;
-
     private ListView listView;
     private ArrayList<String> arrayData = new ArrayList<String>();
-
-    private LinearLayoutManager linearLayoutManager;
-    private Theme_favorites_adapter theme_favorites_adapter;
 
     private FloatingActionButton fab, fab1, fab2;
     private Animation fab_open, fab_close;
@@ -72,6 +67,7 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
         setContentView(R.layout.activity_theme);
 
         //뷰페이저 설정
+
         viewPager=findViewById(R.id.viewPager);
         tabLayout=findViewById(R.id.tabLayout);
 

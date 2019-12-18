@@ -1,6 +1,5 @@
 package com.example.mu338.stampinseoul;
 
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,7 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-// 맛집 코드 : 39
+    // == ThemeActivity. 맛집 테마 Fragment.
+
 public class Theme_food_frag extends Fragment {
 
     private View view;

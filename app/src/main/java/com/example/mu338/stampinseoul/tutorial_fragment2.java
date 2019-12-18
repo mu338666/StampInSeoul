@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+    // == 튜토리얼 Fragment 2.
+
 public class tutorial_fragment2 extends Fragment {
 
     private TextView textView;

@@ -15,9 +15,9 @@ import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
 import com.kakao.auth.KakaoSDK;
 
-public class App extends Application {
-
     // 카카오 로그인과 관련된 설정을 저장하는 클래스
+
+public class App extends Application {
 
     private static volatile App instance = null;
 
