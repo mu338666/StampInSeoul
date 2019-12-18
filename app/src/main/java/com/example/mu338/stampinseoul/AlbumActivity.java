@@ -83,6 +83,7 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
         recyclerView.setAdapter(albumAdapter);
 
+        cameraList.removeAll(cameraList);
 
         // == 플로팅 버튼 , 드로어
         fab = view.findViewById(R.id.fab);

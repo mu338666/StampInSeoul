@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -135,7 +136,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
                         if(check.get(x).equals(list.get(position).getTitle())){
                             check.remove(x);
 
-                            // Toast.makeText(getContext(), "테스트 else", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "테스트 else", Toast.LENGTH_SHORT).show();
                             tag=false;
                             break;
                         }
@@ -249,7 +250,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
                     if(x.equals(y.getTitle())){
 
                         //위치값
-                        LatLng latLng = new LatLng(y.getMapX(), y.getMapY());
+                        LatLng latLng = new LatLng(y.getMapY(), y.getMapX());
                         //지도에 표시 마킹
 
                         MarkerOptions markerOptions = new MarkerOptions();

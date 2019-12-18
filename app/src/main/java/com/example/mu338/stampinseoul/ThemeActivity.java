@@ -423,6 +423,8 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
                 cursor.close();
 
+                break;
+
             case R.id.btnSearch :
 
                 String word = edtSearch.getText().toString().trim();
@@ -439,12 +441,16 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
                     Toast.makeText(getApplicationContext(), "두 글자 이상 입력해 주세요", Toast.LENGTH_LONG).show();
                 }
 
+                break;
+
             default:
                 break;
         }
     }
 
     public void anim() {
+
+
 
         if (isFabOpen) {
 

@@ -155,8 +155,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
             @Override
             public void onClick(View view, int position) {
 
-                lastlat = list.get(position).getMapX();
-                lastlng = list.get(position).getMapY();
+                lastlng = list.get(position).getMapX();
+                lastlat = list.get(position).getMapY();
 
             }
 
