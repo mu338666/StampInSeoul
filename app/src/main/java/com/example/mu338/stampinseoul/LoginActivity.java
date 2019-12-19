@@ -161,17 +161,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         MainActivity.db.execSQL(insertUserInfo);
 
-
-
                         // 새로 로그인한 유저의 전용 테이블 2개 생성
                         String createZzimTBL = "CREATE TABLE IF NOT EXISTS ZZIM_" + result.getId() + "("
                                 + "title TEXT PRIMARY KEY, "
                                 + "addr TEXT, "
                                 + "mapX REAL, "
-                                + "mapY REAL); ";
+                                + "mapY REAL, "
+                                + "firstImage TEXT); ";
 
                         MainActivity.db.execSQL(createZzimTBL);
-
 
                         String createStampTBL = "CREATE TABLE IF NOT EXISTS STAMP_" + result.getId() + "("
                                 + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -179,11 +177,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 + "addr TEXT, "
                                 + "mapX REAL, "
                                 + "mapY REAL, "
+                                + "firstImage TEXT, "
                                 + "picture TEXT, "
                                 + "content_pola TEXT, "
                                 + "content_title TEXT, "
                                 + "contents TEXT, "
                                 + "complete INTEGER);";
+
 
                         MainActivity.db.execSQL(createStampTBL);
 

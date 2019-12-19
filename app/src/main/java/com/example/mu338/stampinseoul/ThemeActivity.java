@@ -292,7 +292,7 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
                 if (cursor != null) {
                     while (cursor.moveToNext()) {
-                        list.add(new ThemeData(cursor.getString(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(3)));
+                        list.add(new ThemeData(cursor.getString(0), cursor.getString(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getString(4)));
                         titleList.add(cursor.getString(0));
                     }
                 }
@@ -398,12 +398,15 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
 
                             for (ThemeData themeData : checkedList) {
 
-                                String stampInsert = "INSERT INTO STAMP_" + LoginActivity.userId + "(title, addr, mapX, mapY)" + " VALUES('" + themeData.getTitle() + "', '"
+                                String stampInsert = "INSERT INTO STAMP_" + LoginActivity.userId + "(title, addr, mapX, mapY, firstImage)" + " VALUES('" + themeData.getTitle() + "', '"
                                         + themeData.getAddr() + "', '"
                                         + themeData.getMapX() + "', '"
-                                        + themeData.getMapY() + "');";
+                                        + themeData.getMapY() + "', '"
+                                        + themeData.getFirstImage() + "');";
 
                                 MainActivity.db.execSQL(stampInsert);
+
+                                //Log.d("TAG", themeData.getFirstImage());
                             }
                         }
 

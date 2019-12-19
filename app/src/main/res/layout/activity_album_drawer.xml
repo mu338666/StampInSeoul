@@ -106,7 +106,7 @@
                 app:layout_constraintHorizontal_bias="0.147"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stamp4"
-                app:srcCompat="@drawable/bus" />
+                app:srcCompat="@drawable/food" />
 
             <ImageView
                 android:id="@+id/stamp6"
@@ -136,7 +136,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stamp8"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/cam" />
+                app:srcCompat="@drawable/bus" />
 
             <ImageView
                 android:id="@+id/stamp8"
@@ -219,7 +219,7 @@
                 app:layout_constraintHorizontal_bias="0.147"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stamp4"
-                app:srcCompat="@drawable/bus2" />
+                app:srcCompat="@drawable/food2" />
 
             <ImageView
                 android:id="@+id/stamp6C"
@@ -249,7 +249,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stamp8"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/cam2" />
+                app:srcCompat="@drawable/bus2" />
 
             <ImageView
                 android:id="@+id/stamp8C"

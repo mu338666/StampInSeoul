@@ -139,11 +139,11 @@ public class Theme_festival_frag extends Fragment {
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
 
-                        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+                        /*MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
 
                         Cursor cursor;
 
-                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);
+                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);*/
 
                         try {
                             JSONObject parse_response = (JSONObject) response.get("response");
@@ -165,13 +165,13 @@ public class Theme_festival_frag extends Fragment {
                                 themeData.setMapY(imsi.getDouble("mapy"));
                                 themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
 
-                                while(cursor.moveToNext()){
+                                /*while(cursor.moveToNext()){
                                     if(cursor.getString(0).equals(themeData.getTitle())){
                                         themeData.setHart(true);
                                     }
                                 }
 
-                                cursor.moveToFirst();
+                                cursor.moveToFirst();*/
 
                                 list.add(themeData);
 

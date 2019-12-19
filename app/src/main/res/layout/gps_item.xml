@@ -8,7 +8,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="286dp"
-        android:layout_height="80dp"
+        android:layout_height="75dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginEnd="4dp"
@@ -34,14 +34,14 @@
             android:text="테스트"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/txtContent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.099"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.205" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/txtContent"
@@ -55,19 +55,19 @@
             android:layout_marginBottom="8dp"
             android:text="테스트"
             android:textColor="#FFFFFF"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.139"
+            app:layout_constraintHorizontal_bias="0.094"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.833" />
+            app:layout_constraintVertical_bias="0.826" />
 
-        <ImageButton
+  <!--      <ImageButton
             android:id="@+id/imaProfile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
@@ -77,12 +77,12 @@
             android:background="@drawable/ic_my_location_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.919"
+            app:layout_constraintHorizontal_bias="0.966"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.517" />
+            app:layout_constraintVertical_bias="0.483" />
 
-
+-->
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

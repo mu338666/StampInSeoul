@@ -51,88 +51,79 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_view1"
-                android:layout_width="333dp"
-                android:layout_height="333dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.421"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.45" />
+                app:layout_constraintTop_toBottomOf="@+id/location"/>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_view2"
-                android:layout_width="333dp"
-                android:layout_height="333dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.421"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.45" />
+                app:layout_constraintTop_toBottomOf="@+id/location"/>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_view3"
-                android:layout_width="333dp"
-                android:layout_height="333dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.421"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.45" />
+                app:layout_constraintTop_toBottomOf="@+id/location"/>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_view4"
-                android:layout_width="333dp"
-                android:layout_height="333dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.421"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.45" />
+                app:layout_constraintTop_toBottomOf="@+id/location" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_view5"
-                android:layout_width="333dp"
-                android:layout_height="333dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.421"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.45" />
+                app:layout_constraintTop_toBottomOf="@+id/location" />
+
 
 
             <LinearLayout
@@ -141,7 +132,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
@@ -149,46 +139,82 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <Button
                     android:id="@+id/alert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="등록" />
+                    android:background="@drawable/button_green"
+                    android:text="등록"
+                    android:textColor="#ffffff" />
 
 
                 <Button
                     android:id="@+id/alert_release"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="해제" />
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/button_red"
+                    android:text="해제"
+                    android:textColor="#ffffff" />
 
             </LinearLayout>
 
 
             <TextView
                 android:id="@+id/location"
-                android:layout_width="0dp"
-                android:layout_height="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:text="기본 이미지 입니다."
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@+id/animation_view5"
+                app:layout_constraintBottom_toTopOf="@+id/animation_view1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.142" />
+                app:layout_constraintVertical_bias="0.472" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout8"
+                android:layout_width="200dp"
+                android:layout_height="139dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="12dp"
+                android:background="#ffffff"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgGpsPicture"
+                    android:layout_width="0dp"
+                    android:layout_height="127dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/gps_list_back" />
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 

@@ -33,10 +33,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -95,6 +97,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
     int[] img = {R.drawable.gps_back1, R.drawable.gps_back2, R.drawable.gps_back3, R.drawable.gps_back4 };
 
+    ImageView imgGpsPicture;
+
     // == 애니메이션
 
     LottieAnimationView animationView1 = null;
@@ -109,6 +113,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         view = inflater.inflate(R.layout.activity_gps, container, false);
 
+        list.removeAll(list);
+
         MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
 
         Cursor cursor;
@@ -118,7 +124,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         if(cursor != null){
 
             while(cursor.moveToNext()){
-                list.add(new ThemeData(cursor.getString(1), cursor.getString(2), cursor.getDouble(3), cursor.getDouble(4)));
+                list.add(new ThemeData(cursor.getString(1), cursor.getString(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getString(5)));
             }
         }
 
@@ -142,6 +148,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
+        final ImageView imgGpsPicture = view.findViewById(R.id.imgGpsPicture);
+
         linearLayoutManager = new LinearLayoutManager(view.getContext());
 
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -158,6 +166,9 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                 lastlng = list.get(position).getMapX();
                 lastlat = list.get(position).getMapY();
 
+                Glide.with(view.getContext()).load(list.get(position).getFirstImage()).override(500, 300).into(imgGpsPicture);
+
+                dl.closeDrawer(drawer);
             }
 
             @Override
@@ -266,6 +277,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         animationView5.setVisibility(View.INVISIBLE);
 
+
+
         return view;
     }
 
@@ -342,6 +355,8 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
                     win = false;
                     Toast.makeText(getActivity(), "GPS기능을 해제합니다.", Toast.LENGTH_SHORT).show();
+
+                    imgGpsPicture.setVisibility(View.INVISIBLE);
 
                     locationText.setText("등록버튼을 눌러주세요.");
 

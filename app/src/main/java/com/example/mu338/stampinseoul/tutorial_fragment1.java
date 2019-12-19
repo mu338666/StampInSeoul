@@ -9,9 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-    // == 튜토리얼 Fragment 1.
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+// == 튜토리얼 Fragment 1.
 
 public class tutorial_fragment1 extends Fragment {
 
@@ -34,7 +39,11 @@ public class tutorial_fragment1 extends Fragment {
         view = inflater.inflate(R.layout.tutorial_frag1, container, false); // 메인 액티비티의 setContentView와 같음.
 
         textView = view.findViewById(R.id.textView);
-        btnStart = view.findViewById(R.id.btnStart);
+
+        ImageView marker = view.findViewById(R.id.marker);
+        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(marker);
+        Glide.with(this).load(R.drawable.markeranimaition).into(gifImage);
+        /*btnStart = view.findViewById(R.id.btnStart);
 
         btnStart.setVisibility(View.INVISIBLE);
 
@@ -47,7 +56,7 @@ public class tutorial_fragment1 extends Fragment {
                 startActivity(intent);
 
             }
-        });
+        });*/
 
 
         return view;

@@ -280,13 +280,12 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
             Bitmap smallMarker = Bitmap.createScaledBitmap(b, 120, 120, false);
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
-
             markerOptions.title("내 위치");
             markerOptions.snippet("현재 위치입니다.");
             markerOptions.position(latLng);
             markerOptions.getIcon();
             googleMaps.addMarker(markerOptions);
-            googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+            googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
 
             win = false;
         }

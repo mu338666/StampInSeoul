@@ -1,7 +1,10 @@
 package com.example.mu338.stampinseoul;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -87,6 +90,8 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
         // == 플로팅 버튼 , 드로어
         fab = view.findViewById(R.id.fab);
+        fab1 = view.findViewById(R.id.fab1);
+        fab2 = view.findViewById(R.id.fab2);
 
         fab_open = AnimationUtils.loadAnimation(view.getContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(view.getContext(), R.anim.fab_close);
@@ -95,6 +100,8 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
         drawer = view.findViewById(R.id.drawer);
 
         fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
 
         drawer.setOnTouchListener(this);
         drawerLayout.setDrawerListener(listener);
@@ -132,7 +139,8 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
         while(cursorComplete.moveToNext()){
             cameraList.add(new ThemeData(cursorComplete.getString(1), cursorComplete.getString(5),
-                    cursorComplete.getString(6), cursorComplete.getString(7), cursorComplete.getString(8), cursorComplete.getInt(9)));
+                    cursorComplete.getString(6), cursorComplete.getString(7), cursorComplete.getString(8), cursorComplete.getString(9),
+                    cursorComplete.getInt(10)));
         }
 
         cursorComplete.moveToFirst();
@@ -199,8 +207,75 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
             case R.id.fab :
 
-                // anim();
+                anim();
+
+                break;
+
+            case R.id.fab1 :
+
+                anim();
                 drawerLayout.openDrawer(drawer);
+
+
+                break;
+
+            case R.id.fab2 :
+
+                anim();
+
+                View viewDialog = View.inflate(v.getContext(), R.layout.dialog_search_message, null);
+
+                Button btnGiveUp = viewDialog.findViewById(R.id.btnGiveUp);
+                Button btnExit = viewDialog.findViewById(R.id.btnExit);
+
+                TextView txt_Detail_title = viewDialog.findViewById(R.id.txt_Detail_title);
+                TextView txtWarning = viewDialog.findViewById(R.id.txtWarning);
+
+                final Dialog noSearchDlg = new Dialog(v.getContext());
+
+                noSearchDlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                txt_Detail_title.setText("주의");
+                txtWarning.setText("정말 미션을 포기 하시겠어요?");
+
+                noSearchDlg.setContentView(viewDialog);
+                noSearchDlg.show();
+
+                btnGiveUp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        cameraList.removeAll(cameraList);
+
+                        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+                        MainActivity.db.execSQL("DROP TABLE IF EXISTS STAMP_" + LoginActivity.userId + ";");
+                        MainActivity.db.execSQL("CREATE TABLE IF NOT EXISTS STAMP_" + LoginActivity.userId  + "("
+                                + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                + "title TEXT, "
+                                + "addr TEXT, "
+                                + "mapX REAL, "
+                                + "mapY REAL, "
+                                + "picture TEXT, "
+                                + "content_pola TEXT, "
+                                + "content_title TEXT, "
+                                + "contents TEXT, "
+                                + "complete INTEGER);");
+
+                        Intent intent = new Intent(v.getContext(), ThemeActivity.class);
+                        startActivity(intent);
+
+                        getActivity().finish();
+
+                    }
+                });
+
+                btnExit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        noSearchDlg.dismiss();
+                    }
+                });
+
 
                 break;
 
@@ -263,7 +338,7 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
     }
 
-    /*// 플로팅 버튼 애니메이션 메소드
+    // 플로팅 버튼 애니메이션 메소드
     public void anim() {
 
         if (isFabOpen) {
@@ -283,6 +358,6 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
             isFabOpen = true;
 
         }
-    }*/
+    }
 
 }

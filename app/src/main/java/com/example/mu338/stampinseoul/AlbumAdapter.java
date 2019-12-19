@@ -1,11 +1,13 @@
 package com.example.mu338.stampinseoul;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-    // AlbumActivity 리사이클러뷰 어댑터
+import de.hdodenhof.circleimageview.CircleImageView;
+
+// AlbumActivity 리사이클러뷰 어댑터
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHolder> {
 
@@ -47,8 +53,16 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
 
         // customViewHolder.txtID.setText(list.get(position).getReviewTxtID());
         customViewHolder.txtPola.setText(list.get(position).getContent_pola());
+
+        Log.d("dd", list.get(position).getContent_pola());
+        Log.d("dd", list.get(position).getContent_title());
+        Log.d("dd", list.get(position).getContents());
+
+        Log.d("dd", list.get(position).getTitle());
+
         customViewHolder.txtTitle.setText(list.get(position).getContent_title());
         customViewHolder.txtContent.setText(list.get(position).getContents());
+        customViewHolder.txtID.setText(list.get(position).getTitle());
 
         customViewHolder.itemView.setTag(position);
 
@@ -61,32 +75,16 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
             customViewHolder.imgReview.setImageResource(R.drawable.a_dialog_design);
         }
 
-        /*
-        try {
+        if (list.get(position).getFirstImage() != null) {
 
-            exifInterface = new ExifInterface(list.get(position).getImgPhoto());
+            // Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getPicture());
+            //customViewHolder.imgChoice.setImageBitmap(bitmap);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            Glide.with(customViewHolder.itemView.getContext()).load(list.get(position).getFirstImage()).override(500, 300).into(customViewHolder.imgChoice);
+
+        } else {
+            customViewHolder.imgChoice.setImageResource(R.drawable.a_dialog_design);
         }
-
-        int exifOrientation; //방향
-        int exifDegres; //각도
-
-        if (exifInterface != null) {
-
-            exifOrientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            exifDegres = exiforToDe(exifOrientation);
-
-        }else{
-            exifDegres=0;
-        }
-
-        Bitmap bitmapTeep = rotate(bitmap,exifDegres);
-
-        customViewHolder.imgReview.setImageBitmap(bitmapTeep);
-
-        */
 
     }
 
@@ -100,6 +98,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imgReview;
+        public CircleImageView imgChoice;
 
         public TextView txtPola;
         public TextView txtTitle;
@@ -110,6 +109,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
             super(itemView);
 
             imgReview = itemView.findViewById(R.id.imgReview);
+            imgChoice = itemView.findViewById(R.id.imgChoice);
 
             txtPola = itemView.findViewById(R.id.txtPola);
             txtTitle = itemView.findViewById(R.id.txtTitle);

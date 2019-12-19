@@ -85,50 +85,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = findViewById(R.id.grid_recyclerview);
-
-        adapter = new SearchAdapter(R.layout.item_theme, SearchActivity.this, list);
-
-        layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setLayoutManager(layoutManager);
-
         searchData(word);
     }
-
-
-
-    class AsyncTaskClassSearch extends android.os.AsyncTask<String, Long, String>{
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            displayLoader();
-        }
-
-        @Override
-
-        protected String doInBackground(String... strings) {
-
-            String word = strings[0];
-            Log.d(TAG, word);
-            searchData(word);
-
-            return "작업 종료";
-        }
-
-        @Override
-        protected void onProgressUpdate(Long... values) {
-            super.onProgressUpdate(values);
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-
-    } // end of AsyncTaskClassSearch
 
 
     public void searchData(String word) {
@@ -148,102 +106,96 @@ public class SearchActivity extends AppCompatActivity {
                 + appName + "&_type=json";
 
 
-        if(url != null) {
-
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-                            MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
+                        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
 
-                            Cursor cursor;
+                        Cursor cursor;
 
-                            cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);
+                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);
 
-                            try {
+                        try {
 
-                                JSONObject parse_response = (JSONObject) response.get("response");
-                                JSONObject parse_body = (JSONObject) parse_response.get("body");
-                                JSONObject parse_items = (JSONObject) parse_body.get("items");
-                                JSONArray parse_itemlist = (JSONArray) parse_items.get("item");
+                            JSONObject parse_response = (JSONObject) response.get("response");
+                            JSONObject parse_body = (JSONObject) parse_response.get("body");
+                            JSONObject parse_items = (JSONObject) parse_body.get("items");
+                            JSONArray parse_itemlist = (JSONArray) parse_items.get("item");
 
-                                list.removeAll(list);
+                            list.removeAll(list);
 
-                                for (int i = 0; i < parse_itemlist.length(); i++) {
+                            for (int i = 0; i < parse_itemlist.length(); i++) {
 
-                                    JSONObject imsi = (JSONObject) parse_itemlist.get(i);
+                                JSONObject imsi = (JSONObject) parse_itemlist.get(i);
 
-                                    ThemeData themeData = new ThemeData();
-                                    themeData.setFirstImage(imsi.getString("firstimage"));
-                                    themeData.setTitle(imsi.getString("title"));
-                                    themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
+                                ThemeData themeData = new ThemeData();
+                                themeData.setFirstImage(imsi.getString("firstimage"));
+                                themeData.setTitle(imsi.getString("title"));
+                                themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
 
 
-                                    while(cursor.moveToNext()){
-                                        if(cursor.getString(0).equals(themeData.getTitle())){
-                                            themeData.setHart(true);
-                                        }
+                                while(cursor.moveToNext()){
+                                    if(cursor.getString(0).equals(themeData.getTitle())){
+                                        themeData.setHart(true);
                                     }
-                                    cursor.moveToFirst();
-                                    list.add(themeData);
-
                                 }
+                                cursor.moveToFirst();
+                                list.add(themeData);
 
-                                recyclerView.setAdapter(adapter);
-
-                            } catch (ClassCastException e1) {
-                                e1.printStackTrace();
-
-                                View viewDialog = View.inflate(getApplicationContext(), R.layout.dialog_search_message, null);
-
-                                Button btnExit = viewDialog.findViewById(R.id.btnExit);
-
-                                final Dialog noSearchDlg = new Dialog(SearchActivity.this);
-
-                                noSearchDlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                                noSearchDlg.setContentView(viewDialog);
-                                noSearchDlg.show();
-
-                                btnExit.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        noSearchDlg.dismiss();
-                                    }
-                                });
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
+
+                            recyclerView.setAdapter(adapter);
+
+                        } catch (ClassCastException e1) {
+                            e1.printStackTrace();
+
+                            View viewDialog = View.inflate(getApplicationContext(), R.layout.dialog_search_message, null);
+
+                            Button btnExit = viewDialog.findViewById(R.id.btnExit);
+
+                            final Dialog noSearchDlg = new Dialog(SearchActivity.this);
+
+                            noSearchDlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                            noSearchDlg.setContentView(viewDialog);
+                            noSearchDlg.show();
+
+                            btnExit.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    noSearchDlg.dismiss();
+                                }
+                            });
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                    }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
 
-                        @Override
+                    @Override
 
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(),
-                                    error.getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),
+                                error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
 
-                    });
-            queue.add(jsObjRequest);
+                });
 
-        }else{
-            Toast.makeText(getApplicationContext(), "검색결과 없음", Toast.LENGTH_LONG).show();
-        }
-    }
+        queue.add(jsObjRequest);
 
-    private void displayLoader() {
+        recyclerView = findViewById(R.id.grid_recyclerview);
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("잠시만 기다려 주세요..");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
+        adapter = new SearchAdapter(R.layout.item_theme, SearchActivity.this, list);
+
+        layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(layoutManager);
     }
 
 }

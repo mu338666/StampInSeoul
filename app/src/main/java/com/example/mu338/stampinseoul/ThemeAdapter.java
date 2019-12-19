@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -103,8 +104,29 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
             }
         });
 
+        MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
 
-        holder.Like_heart.setSelected(false);
+        Cursor cursor;
+
+        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);
+        while(cursor.moveToNext()){
+            if(cursor.getString(0).equals(list.get(position).getTitle())){
+                list.get(position).setHart(true);
+                break;
+            }
+        }
+        if(cursor!=null){
+            cursor.close();
+        }
+
+        if (list.get(position).isHart()) {
+            holder.Like_heart.setSelected(true);
+        }else{
+            holder.Like_heart.setSelected(false);
+        }
+
+
+        // holder.Like_heart.setSelected(false);
 
         holder.Like_heart.setOnClickListener(new View.OnClickListener() {
 
@@ -137,10 +159,12 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
                         String zzimInsert = "INSERT INTO ZZIM_" + LoginActivity.userId + " VALUES('" + list.get(position).getTitle() + "', '"
                                 + list.get(position).getAddr() + "', '"
                                 + list.get(position).getMapX() + "', '"
-                                + list.get(position).getMapY() + "');";
+                                + list.get(position).getMapY() + "', '"
+                                + list.get(position).getFirstImage() + "');";
 
                         MainActivity.db.execSQL(zzimInsert);
 
+                        Log.d("TAG", "하트 선택 : "+list.get(position).getFirstImage());
                         Log.d("TAG", "하트를 선택하면 ZZIM 테이블 디비에 들어간다 : " + list.get(position).getAddr());
 
                         holder.Like_heart.likeAnimation(new AnimatorListenerAdapter() {
@@ -167,9 +191,9 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
 
         });
 
-        if (list.get(position).isHart()) {
+        /*if (list.get(position).isHart()) {
             holder.Like_heart.setSelected(true);
-        }
+        }*/
 
     }
 

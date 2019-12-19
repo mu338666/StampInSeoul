@@ -161,7 +161,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                     +"', complete="+1 //성공여부
                     +" WHERE title='"+title+"';");
 
-
             MainActivity.db.close();
 
             finish();
