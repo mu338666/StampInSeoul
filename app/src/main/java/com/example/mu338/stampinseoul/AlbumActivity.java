@@ -125,6 +125,8 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
         stamp7C = view.findViewById(R.id.stamp7C);
         stamp8C = view.findViewById(R.id.stamp8C);
 
+
+
         stamoInvisible();
 
         // == 카메라
@@ -145,6 +147,8 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
         cursorComplete.moveToFirst();
 
+        Animation ai;
+
         for(int i=1;i<=cursorComplete.getCount();i++){
 
             switch (i){
@@ -152,41 +156,58 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
                 case 1:
 
                     stamp1C.setVisibility(View.VISIBLE);
+
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp1C.startAnimation(ai);
                     break;
 
                 case 2:
 
                     stamp2C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp2C.startAnimation(ai);
                     break;
 
                 case 3:
 
                     stamp3C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp3C.startAnimation(ai);
                     break;
 
                 case 4:
 
                     stamp4C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp4C.startAnimation(ai);
                     break;
 
                 case 5:
 
                     stamp5C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp5C.startAnimation(ai);
                     break;
 
                 case 6:
 
                     stamp6C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp6C.startAnimation(ai);
                     break;
 
                 case 7:
 
                     stamp7C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp7C.startAnimation(ai);
                     break;
 
                 case 8:
 
                     stamp8C.setVisibility(View.VISIBLE);
+                    ai = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
+                    stamp8C.startAnimation(ai);
                     break;
             }
         }
@@ -255,6 +276,7 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
                                 + "addr TEXT, "
                                 + "mapX REAL, "
                                 + "mapY REAL, "
+                                + "firstImage TEXT, "
                                 + "picture TEXT, "
                                 + "content_pola TEXT, "
                                 + "content_title TEXT, "

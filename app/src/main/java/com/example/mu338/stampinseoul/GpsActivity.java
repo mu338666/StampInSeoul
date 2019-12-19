@@ -95,7 +95,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
     private GpsAnimationDialog gpsAnimationDialog;
 
-    int[] img = {R.drawable.gps_back1, R.drawable.gps_back2, R.drawable.gps_back3, R.drawable.gps_back4 };
+    int[] img = {R.drawable.gps_back1, R.drawable.gps_back2, R.drawable.gps_back3, R.drawable.gps_back4, R.drawable.gps_back5 };
 
     ImageView imgGpsPicture;
 
@@ -148,7 +148,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
-        final ImageView imgGpsPicture = view.findViewById(R.id.imgGpsPicture);
+        imgGpsPicture = view.findViewById(R.id.imgGpsPicture);
 
         linearLayoutManager = new LinearLayoutManager(view.getContext());
 
@@ -356,7 +356,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
                     win = false;
                     Toast.makeText(getActivity(), "GPS기능을 해제합니다.", Toast.LENGTH_SHORT).show();
 
-                    imgGpsPicture.setVisibility(View.INVISIBLE);
+                    imgGpsPicture.setImageResource(R.drawable.a_dialog_design);
 
                     locationText.setText("등록버튼을 눌러주세요.");
 

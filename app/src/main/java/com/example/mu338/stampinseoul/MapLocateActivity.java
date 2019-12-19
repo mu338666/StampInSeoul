@@ -259,7 +259,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
                         markerOptions.position(latLng);
 
                         googleMaps.addMarker(markerOptions);
-                        googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+                        googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
 
                     }
                 }
@@ -285,7 +285,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
             markerOptions.position(latLng);
             markerOptions.getIcon();
             googleMaps.addMarker(markerOptions);
-            googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
+            googleMaps.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
 
             win = false;
         }

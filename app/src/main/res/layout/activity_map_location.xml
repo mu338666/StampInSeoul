@@ -101,9 +101,9 @@
                 android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                map:cameraTargetLat="37.562817"
-                map:cameraTargetLng="127.033247"
-                map:cameraZoom="16" />
+                map:cameraTargetLat="37.551433"
+                map:cameraTargetLng="126.988162"
+                map:cameraZoom="13" />
 
 
         </LinearLayout>

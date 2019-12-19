@@ -411,6 +411,8 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
                         }
 
                         cursor.close();
+
+                        dialog.dismiss();
                     }
                 });
 
