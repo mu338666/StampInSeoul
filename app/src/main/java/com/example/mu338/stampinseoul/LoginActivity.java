@@ -34,7 +34,7 @@ import java.security.NoSuchAlgorithmException;
 
     // LoginActivity. 로그인 처리 클래스
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     private Button btnLogin, btnGuestLogin;
     private LoginButton btn_kakao_login;
@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin = findViewById(R.id.btnLogin);
 
-        btnGuestLogin = findViewById(R.id.btnGuestLogin);
         btn_kakao_login = findViewById(R.id.btn_kakao_login);
 
         // == 카카오
@@ -70,28 +69,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        btnGuestLogin.setEnabled(false);
-        btnGuestLogin.setOnClickListener(this);
-
     }
 
-    @Override
-    public void onClick(View v) {
 
-        switch (v.getId()){
-
-            case R.id.btnGuestLogin :
-
-                Intent intent = new Intent(LoginActivity.this, ThemeActivity.class);
-
-                startActivity(intent);
-
-                finish();
-
-                break;
-
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
