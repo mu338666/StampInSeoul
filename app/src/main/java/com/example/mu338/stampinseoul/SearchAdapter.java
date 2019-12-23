@@ -271,23 +271,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                             JSONObject parse_items = (JSONObject) parse_body.get("items");
                             JSONObject parse_itemlist = (JSONObject) parse_items.get("item");
 
-                            //list.removeAll(list);
-
-                            // detailThemeData = null;
-
                             detailThemeData.setFirstImage(parse_itemlist.getString("firstimage"));
                             detailThemeData.setTitle(parse_itemlist.getString("title"));
                             detailThemeData.setAddr(parse_itemlist.getString("addr1"));
                             detailThemeData.setOverView(parse_itemlist.getString("overview"));
 
-                            //Toast.makeText(getActivity(), "봐야됨 "+ parse_itemlist.getString("addr1"), Toast.LENGTH_SHORT).show();
-                            //list.add(detailThemeData);
-                            // Log.d(TAG, " Two frg : "+detailThemeData.getTitle());
 
                         } catch (JSONException e) {
-
                             e.printStackTrace();
                         }
+
                     }
 
                 }, new Response.ErrorListener() {
@@ -300,8 +293,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                 });
 
         queue.add(jsObjRequest);
-
-        // Log.d(TAG, "getDATA에서 : "+detailThemeData);
 
         try {
             Thread.sleep(1000);

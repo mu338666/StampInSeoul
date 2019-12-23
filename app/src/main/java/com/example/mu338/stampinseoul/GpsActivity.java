@@ -211,6 +211,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
 
 
         // == 플로팅 버튼, 드로어
+
         fab = view.findViewById(R.id.fab);
 
         fab_open = AnimationUtils.loadAnimation(view.getContext(), R.anim.fab_open);
@@ -225,6 +226,7 @@ public class GpsActivity extends Fragment implements View.OnClickListener, View.
         drawer.setOnTouchListener(this);
         dl.setDrawerListener(listener);
 
+        // == 배경 및 애니메이션
 
         Random ram = new Random();
 

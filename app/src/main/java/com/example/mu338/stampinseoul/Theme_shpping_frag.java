@@ -46,9 +46,6 @@ public class Theme_shpping_frag extends Fragment {
     // 메인 화면 출력용
     ArrayList<ThemeData> list = new ArrayList<>();
 
-    // 상세 다이얼로그 출력용
-    ThemeData detailThemeData = new ThemeData();
-
     final static String TAG = "ThemeActivity";
     static final String KEY = "OEZDFxQGYkA8crUzSlj51nwQQb9Jh78Y5UWvaW5gXccZ5t2ttRXNjcdXjJJ8FsHlriUWu%2B%2FVhFfuI32FbuMhTA%3D%3D";
     static final String appName = "Zella";
@@ -135,12 +132,6 @@ public class Theme_shpping_frag extends Fragment {
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
 
-                        /*MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
-
-                        Cursor cursor;
-
-                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);*/
-
                         try {
                             JSONObject parse_response = (JSONObject) response.get("response");
                             JSONObject parse_body = (JSONObject) parse_response.get("body");
@@ -160,17 +151,8 @@ public class Theme_shpping_frag extends Fragment {
                                 themeData.setMapY(imsi.getDouble("mapy"));
                                 themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
 
-                                /*while(cursor.moveToNext()){
-                                    if(cursor.getString(0).equals(themeData.getTitle())){
-                                        themeData.setHart(true);
-                                    }
-                                }
-
-                                cursor.moveToFirst();*/
-
                                 list.add(themeData);
 
-                                //contentIdList.add(Integer.valueOf(imsi.getString("contentid")));
                             }
 
                             recyclerView.setAdapter(adapter);

@@ -126,8 +126,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
         }
 
 
-        // holder.Like_heart.setSelected(false);
-
         holder.Like_heart.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -190,10 +188,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.MyViewHolder
             } // onClick
 
         });
-
-        /*if (list.get(position).isHart()) {
-            holder.Like_heart.setSelected(true);
-        }*/
 
     }
 

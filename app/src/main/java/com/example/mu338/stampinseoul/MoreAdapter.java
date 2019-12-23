@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-    // MoreActivity 어댑터 클래스.
+    // MoreActivity 어댑터 클래스. ExpandableList를 써서 부모리스트, 자식 리스트가 나뉨.
 
-public class MoreAdapter extends BaseExpandableListAdapter /*RecyclerView.Adapter<MoreAdapter.CustomViewHolder>*/ {
+public class MoreAdapter extends BaseExpandableListAdapter {
 
     private ArrayList<String> groupList;
     private ArrayList<ArrayList<String>> chileList;

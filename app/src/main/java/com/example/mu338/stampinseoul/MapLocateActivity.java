@@ -54,10 +54,8 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
     double lng = 0.0;
 
     LocationManager locManager;
-    PendingIntent proximityIntent;
 
     static ArrayList<ThemeData> list = new ArrayList<>();
-    ArrayList<MarkerOptions> cctvList = new ArrayList<MarkerOptions>();
     ArrayList<String> check = new ArrayList<>();
     static GoogleMap googleMaps;
     static GoogleMap googleMaps2;
@@ -136,7 +134,6 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
                         if(check.get(x).equals(list.get(position).getTitle())){
                             check.remove(x);
 
-                            //Toast.makeText(getContext(), "테스트 else", Toast.LENGTH_SHORT).show();
                             tag=false;
                             break;
                         }
@@ -148,8 +145,6 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
                 }
 
                 mapView = view1.findViewById(R.id.fgGoogleMap);
-
-                // mapView.onCreate(savedInstanceState);
 
                 mapView.getMapAsync(MapLocateActivity.this);
 
@@ -231,6 +226,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
 
     }
 
+    // == 내 위치 마커로 찍기
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -251,8 +247,8 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
 
                         //위치값
                         LatLng latLng = new LatLng(y.getMapY(), y.getMapX());
-                        //지도에 표시 마킹
 
+                        //지도에 표시 마킹
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.title(y.getTitle());
                         markerOptions.snippet(y.getAddr());
@@ -343,6 +339,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
         return true;
     }
 
+
     private void listSetting() {
 
         list.removeAll(list);
@@ -363,6 +360,7 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
 
     }
 
+    // 플로팅 애니메이션
     public void anim() {
 
         if (isFabOpen) {
@@ -394,8 +392,6 @@ public class MapLocateActivity extends Fragment implements OnMapReadyCallback, V
             win = true;
 
             mapView = view1.findViewById(R.id.fgGoogleMap);
-
-            // mapView.onCreate(savedInstanceState);
 
             mapView.getMapAsync(MapLocateActivity.this);
         }

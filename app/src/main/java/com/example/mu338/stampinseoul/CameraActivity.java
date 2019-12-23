@@ -139,19 +139,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
         } else if (v.getId() == R.id.btnSave) {
 
-            /*Intent intent = new Intent(CameraActivity.this, BottomMenuActivity.class);
-
-            intent.putExtra("list", list);
-
-            startActivity(intent);*/
-
-
-            FragmentTransaction fragmentTransaction =
-
-                    getSupportFragmentManager().beginTransaction();
-
-            AlbumActivity alb = new AlbumActivity();
-
             MainActivity.db=MainActivity.dbHelper.getWritableDatabase();
 
             MainActivity.db.execSQL("UPDATE STAMP_"+LoginActivity.userId+" SET picture='"+imageFilepath

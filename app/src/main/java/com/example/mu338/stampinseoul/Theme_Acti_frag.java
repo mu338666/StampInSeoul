@@ -1,6 +1,5 @@
 package com.example.mu338.stampinseoul;
 
-
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -48,8 +47,6 @@ public class Theme_Acti_frag extends Fragment {
     AlertDialog.Builder dialog;
     // 메인 화면 출력용
     ArrayList<ThemeData> list = new ArrayList<>();
-
-    LottieAnimationView animationView1 = null;
 
     final static String TAG = "ThemeActivity";
     static final String KEY = "GN2mE8m8pbEpOyKZDhiRdDOZjg%2FR%2FUEIgo7z26k3HEefz8M0DvSZZwn0ekpLJmg%2F42jihzBbKf57CP79m12CrA%3D%3D";
@@ -113,7 +110,7 @@ public class Theme_Acti_frag extends Fragment {
         // doInBackground 메서드가 완료되면 메인 쓰레드가 얘를 호출한다(doInBackground가 반환한 값을 매개변수로 받음)
         @Override
         protected void onPostExecute(String s) {
-            // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+
             super.onPostExecute(s);
         }
     } // end of AsyncTaskClassMain
@@ -135,12 +132,6 @@ public class Theme_Acti_frag extends Fragment {
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
 
-                        /*MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
-
-                        Cursor cursor;
-
-                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);*/
-
                         try {
                             JSONObject parse_response = (JSONObject) response.get("response");
                             JSONObject parse_body = (JSONObject) parse_response.get("body");
@@ -160,17 +151,8 @@ public class Theme_Acti_frag extends Fragment {
                                 themeData.setMapY(imsi.getDouble("mapy"));
                                 themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
 
-                                /*while(cursor.moveToNext()){
-                                    if(cursor.getString(0).equals(themeData.getTitle())){
-                                        themeData.setHart(true);
-                                    }
-                                }
-
-                                cursor.moveToFirst();*/
-
                                 list.add(themeData);
 
-                                //contentIdList.add(Integer.valueOf(imsi.getString("contentid")));
                             }
 
                             recyclerView.setAdapter(adapter);

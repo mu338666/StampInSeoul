@@ -76,7 +76,6 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
     private ImageButton btnSearch;
 
     String strNickname, strProfile;
-    Long strId;
     Long ID;
 
     Bitmap bitmap;
@@ -133,8 +132,8 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
         strProfile = intent.getStringExtra("profile");
         Long strId = intent.getLongExtra("id", 0L);
 
-        // Toast.makeText(getApplicationContext(), strNickname+" 님, 환영합니다!", Toast.LENGTH_SHORT).show();
 
+        // == 커스텀 토스트
         Context context = getApplicationContext();
         CharSequence txt = "메시지입니다.";
         int time = Toast.LENGTH_SHORT; // or Toast.LENGTH_LONG
@@ -312,7 +311,6 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
                 final Dialog dialog = new Dialog(viewDialog.getContext());
 
                 // Check
-
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
@@ -355,7 +353,6 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
                 });
 
                 // Delete
-
                 listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -453,9 +450,8 @@ public class ThemeActivity extends AppCompatActivity implements TabLayout.BaseOn
         }
     }
 
+    // 플로팅 애니메이션
     public void anim() {
-
-
 
         if (isFabOpen) {
 

@@ -23,8 +23,6 @@ public class BottomMenuActivity extends AppCompatActivity {
     private AlbumActivity albumActivity;
     private MoreActivity moreActivity;
 
-    String strNickname, strProfile;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

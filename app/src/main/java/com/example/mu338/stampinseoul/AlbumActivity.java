@@ -147,6 +147,9 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
         cursorComplete.moveToFirst();
 
+
+        // == 도장 애니메이션
+
         Animation ai;
 
         for(int i=1;i<=cursorComplete.getCount();i++){
@@ -240,6 +243,8 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
                 break;
 
+                // == 미션 포기 버튼
+
             case R.id.fab2 :
 
                 anim();
@@ -301,12 +306,6 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
 
                 break;
 
-            // 카메라 액티비티 이동
-
-                /*Intent intent2 = new Intent(getActivity(), CameraActivity.class);
-
-                startActivity(intent2);
-*/
             default: break;
 
         }
@@ -347,6 +346,7 @@ public class AlbumActivity extends Fragment implements View.OnClickListener, Vie
     }
 
 
+    // 도장 애니메이션 기본 세팅
     private void stamoInvisible() {
 
         stamp1C.setVisibility(View.INVISIBLE);

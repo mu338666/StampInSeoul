@@ -88,7 +88,7 @@ public class SearchActivity extends AppCompatActivity {
         searchData(word);
     }
 
-
+    // Tour API => 검색 기능 메소드
     public void searchData(String word) {
 
         try {
@@ -147,8 +147,6 @@ public class SearchActivity extends AppCompatActivity {
 
                             }
 
-                            recyclerView.setAdapter(adapter);
-
                         } catch (ClassCastException e1) {
                             e1.printStackTrace();
 
@@ -169,7 +167,6 @@ public class SearchActivity extends AppCompatActivity {
                                     noSearchDlg.dismiss();
                                 }
                             });
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -196,6 +193,8 @@ public class SearchActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(adapter);
     }
 
 }

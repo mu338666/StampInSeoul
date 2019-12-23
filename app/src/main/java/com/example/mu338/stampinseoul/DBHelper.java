@@ -22,11 +22,8 @@ public class DBHelper extends SQLiteOpenHelper {
         //  db.execSQL("DROP TABLE IF EXISTS userTBL");
 
         String str = "CREATE TABLE userTBL("
-
                 + "userId TEXT PRIMARY KEY,"
-
                 + "userName TEXT, "
-
                 + "profileImage TEXT); ";
 
         db.execSQL(str);
@@ -41,6 +38,4 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
-
-
 }

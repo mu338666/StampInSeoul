@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-// AlbumActivity 리사이클러뷰 어댑터
+    // == AlbumActivity 리사이클러뷰 어댑터
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHolder> {
 
@@ -51,14 +51,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull final AlbumAdapter.CustomViewHolder customViewHolder, final int position) {
 
-        // customViewHolder.txtID.setText(list.get(position).getReviewTxtID());
         customViewHolder.txtPola.setText(list.get(position).getContent_pola());
-
-        Log.d("dd", list.get(position).getContent_pola());
-        Log.d("dd", list.get(position).getContent_title());
-        Log.d("dd", list.get(position).getContents());
-
-        Log.d("dd", list.get(position).getTitle());
 
         customViewHolder.txtTitle.setText(list.get(position).getContent_title());
         customViewHolder.txtContent.setText(list.get(position).getContents());
@@ -77,9 +70,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
 
         if (list.get(position).getFirstImage() != null) {
 
-            // Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getPicture());
-            //customViewHolder.imgChoice.setImageBitmap(bitmap);
-
             Glide.with(customViewHolder.itemView.getContext()).load(list.get(position).getFirstImage()).override(500, 300).into(customViewHolder.imgChoice);
 
         } else {
@@ -93,8 +83,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.CustomViewHo
         return (list != null) ? (list.size()) : (0);
     }
 
-    // ==== 내부 클래스
 
+    // ==== 내부 클래스
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imgReview;

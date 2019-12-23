@@ -47,11 +47,6 @@ public class Theme_festival_frag extends Fragment {
     // 메인 화면 출력용
     ArrayList<ThemeData> list = new ArrayList<>();
 
-    LottieAnimationView animationView1 = null;
-    LottieAnimationView animationView2 = null;
-    LottieAnimationView animationView3 = null;
-    LottieAnimationView animationView4 = null;
-
     final static String TAG = "ThemeActivity";
     static final String KEY = "GN2mE8m8pbEpOyKZDhiRdDOZjg%2FR%2FUEIgo7z26k3HEefz8M0DvSZZwn0ekpLJmg%2F42jihzBbKf57CP79m12CrA%3D%3D";
     static final String appName = "Zella";
@@ -82,7 +77,6 @@ public class Theme_festival_frag extends Fragment {
 
         Theme_festival_frag.AsyncTaskClassMain async = new Theme_festival_frag.AsyncTaskClassMain();
         async.execute();
-
 
         return view;
     }
@@ -139,11 +133,6 @@ public class Theme_festival_frag extends Fragment {
                     public void onResponse(JSONObject response) {
                         pDialog.dismiss();
 
-                        /*MainActivity.db = MainActivity.dbHelper.getWritableDatabase();
-
-                        Cursor cursor;
-
-                        cursor = MainActivity.db.rawQuery("SELECT title FROM ZZIM_"+LoginActivity.userId+";", null);*/
 
                         try {
                             JSONObject parse_response = (JSONObject) response.get("response");
@@ -164,14 +153,6 @@ public class Theme_festival_frag extends Fragment {
                                 themeData.setMapX(imsi.getDouble("mapx"));
                                 themeData.setMapY(imsi.getDouble("mapy"));
                                 themeData.setContentsID(Integer.valueOf(imsi.getString("contentid")));
-
-                                /*while(cursor.moveToNext()){
-                                    if(cursor.getString(0).equals(themeData.getTitle())){
-                                        themeData.setHart(true);
-                                    }
-                                }
-
-                                cursor.moveToFirst();*/
 
                                 list.add(themeData);
 

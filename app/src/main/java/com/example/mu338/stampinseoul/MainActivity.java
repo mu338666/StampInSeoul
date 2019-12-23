@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     public static SQLiteDatabase db;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

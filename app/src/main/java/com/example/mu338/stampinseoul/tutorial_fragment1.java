@@ -43,20 +43,6 @@ public class tutorial_fragment1 extends Fragment {
         ImageView marker = view.findViewById(R.id.marker);
         GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(marker);
         Glide.with(this).load(R.drawable.markeranimaition).into(gifImage);
-        /*btnStart = view.findViewById(R.id.btnStart);
-
-        btnStart.setVisibility(View.INVISIBLE);
-
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), ThemeActivity.class);
-
-                startActivity(intent);
-
-            }
-        });*/
 
 
         return view;

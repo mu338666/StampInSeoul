@@ -30,22 +30,12 @@ import java.util.ArrayList;
 
 public class MoreActivity extends Fragment {
 
-    private String[] txtContent = { "내 정보", "고객 센터", "이용 약관", "App 정보"};
-
-    private ArrayList<String> list = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private MoreAdapter moreAdapter;
 
     private View view;
 
     // == 카카오
-
     private Button btnLogout;
-    private ImageView imgKakao;
-    private TextView txtKakaoName;
 
-    String strNickname, strProfile;
     Bitmap bitmap;
 
     // == ExpandableList 펼치고 접는 리스트뷰

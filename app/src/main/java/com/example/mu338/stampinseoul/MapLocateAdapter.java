@@ -47,6 +47,7 @@ public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.Cust
 
         customViewHolder.itemView.setTag(position);
 
+        // 클릭시 그 아이템의 이름을 구글에서 검색되게
         customViewHolder.imaProfile.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -82,7 +83,7 @@ public class MapLocateAdapter extends RecyclerView.Adapter<MapLocateAdapter.Cust
 
     @Override
     public int getItemCount() {
-        return (list != null) ? (list.size()) : (0); // 리스트에 값이 들어있으면 ~
+        return (list != null) ? (list.size()) : (0);
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
